@@ -61,6 +61,8 @@ z = m.addVars(nodes, vtype=GRB.BINARY)
 u = m.addVars(nodes_with_depot)
 u[0].lb = 0
 u[0].ub = 0
+for i in vertices:
+    z[i].ub = 0
 
 cost = 0
 for e in edges:
