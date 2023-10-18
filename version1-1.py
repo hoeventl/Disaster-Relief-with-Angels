@@ -46,7 +46,7 @@ for i in nodes:
     else:
         activation_cost[i] = 0
         angel_aid[i] = 0
-        demand[i] = randint(1,n)
+        demand[i] = randint(1,2)
         angel_demand[i] = 0
 max_num_routes = 3 # K
 vehicle_capacity = 4 # Q
