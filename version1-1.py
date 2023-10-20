@@ -1,8 +1,3 @@
-#
-# Disaster Relief Vehicle Routing Problem (VRP) with Angels
-# Thomas Hoevener, Chrysafis Vogiatzis
-#
-
 import gurobipy as gp
 from gurobipy import GRB
 from random import sample, randint, seed
