@@ -2,3 +2,4 @@ TODO
 
 -instead of relying on the library, copy the vrplib source code into so I can manipulate the graph as it is read in
 -how determine angels? number, demand, community
+-K is number of vehicles

@@ -1,5 +1,5 @@
-import vrplib
-from parse_distance import pairwise_euclidean
+from .vrplib.parse_distance import pairwise_euclidean
+from .vrplib.read_instance import read_instance
 from numpy.random import randint, random_integers
 import numpy as np
 
@@ -10,13 +10,14 @@ class Network:
         pass
 
     def load_vrp(self):
-        self._instance = vrplib.read_instance("Instances/X-n101-k25.vrp")
+        self._instance = read_instance("Instances/X-n101-k25.vrp")
 
     # Adds a random 10 angels with random demand to the instance
     # now assumes that "demand" is same array for vertices and angels
     # the angels will always be the last X nodes in the list
     # very dependent on the index now...
     def add_angels_to_instance(self):
+        angel_radius = 100 # to determine community effect, 0 means help its shadow only
         num_angels = 10
         idx = np.sort(randint(1, self._instance['node_coord'].shape[0], num_angels))
         self._instance['node_coord'].append(self._instance['node_coord'][idx])
