@@ -16,8 +16,8 @@ class Network:
         # These are sets of indices
         self.nodes_with_depot = self.get_nodes_with_depot()
         self.nodes = self.nodes_with_depot[1:]
-        self.vertices = self.nodes[:-self._num_angels]
-        self.angels = self.nodes_with_depot[-self._num_angels:]
+        self.vertices = self.nodes[:-self._num_angels] if num_angels != 0 else self.nodes
+        self.angels = self.nodes_with_depot[-self._num_angels:] if num_angels != 0 else []
         self.communities = self.get_communities()
 
         # These are values
@@ -30,17 +30,17 @@ class Network:
         self.activation_cost = np.concatenate(
             (np.zeros(len(self.nodes_with_depot - self._num_angels)), 
              self._num_angels*self._rng.random(self._num_angels)
-             )).tolist()
+             )).tolist() if num_angels != 0 else []
         self.angel_aid = np.concatenate(
             (np.zeros(len(self.nodes_with_depot - self._num_angels)),
              self._rng.integers(1, self.vehicle_capacity, self._num_angels)
-             )).tolist()
-        self.max_num_routes = 100
+             )).tolist() if num_angels != 0 else []
+        self.max_num_routes = 10
 
 
     def get_angel_parameters(self, num_angels: int = None, radius: float = None):
         if num_angels is None:
-            num_angels = self._rng.integers(1,self._instance['node_coord'].shape[0])
+            num_angels = self._rng.integers(1,self._instance['node_coord'].shape[0]/3)
         if radius is None:
             if num_angels == 0:
                 radius = 0
@@ -48,7 +48,7 @@ class Network:
                 radius = self._rng.random()*np.amax(self._instance['edge_weight'])/3
         return num_angels, radius
 
-    # Adds a random 10 angels with random demand to the instance
+    # Adds a random number angels with random demand to the instance
     # now assumes that "demand" is same array for vertices and angels
     # the angels will always be the last X nodes in the list
     # very dependent on the index now...

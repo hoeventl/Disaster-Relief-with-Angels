@@ -11,10 +11,11 @@ seed(1) # fix construction
 n = 10 + 1
 nodes = range(1,n)
 nodes_with_depot = range(n)
-num_verts = randint(int(n/2), n-2) # make sure at least one angel
-num_angels = n - 1 - num_verts
-max_community_size = min(int(num_verts/num_angels),5)
-min_community_size = 1
+# num_angels = randint(int(n/2))
+num_angels = 0
+num_verts = n - 1 - num_angels
+max_community_size = min(int(num_verts/num_angels),5) if num_angels !=0 else 0
+min_community_size = 1 if num_angels != 0 else 0
 
 # Sets
 vertices = sorted(sample(nodes, num_verts))
@@ -23,8 +24,6 @@ communities = {a: [v for v in sample(vertices, randint(min_community_size, max_c
                for a in angels} # completely random communities, not geographically based
 tmp = sample(list(combinations_with_replacement(nodes_with_depot, 2)), randint(2*n, int(n*n/2))) 
 edges = sorted([e for e in tmp if e[0] != e[1]]) # remove any self loops
-
-print(vertices) # should be [1,2,4,5,6,10] with given seed
 
 # Parameters
 edge_weights = {e: randint(1,n) for e in edges} # w_ij
@@ -51,9 +50,9 @@ vehicle_capacity = 4 # Q
 
 
 m = gp.Model()
-x = m.addVars(edges, vtype=GRB.BINARY)
-z = m.addVars(nodes, vtype=GRB.BINARY)
-u = m.addVars(nodes_with_depot)
+x = m.addVars(edges, vtype=GRB.BINARY, name="x")
+z = m.addVars(nodes, vtype=GRB.BINARY, name="z")
+u = m.addVars(nodes_with_depot, name="u")
 u[0].lb = 0
 u[0].ub = 0
 for i in vertices:
@@ -92,3 +91,6 @@ for i in nodes:
     m.addConstr((u[i] <= vehicle_capacity), f"Uvar_upper_bound_{i}")
 
 m.optimize()
+
+for v in m.getVars():
+    print(f"{v.VarName} = {v.X}")
