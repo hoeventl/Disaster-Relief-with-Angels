@@ -1,6 +1,11 @@
 import gurobipy as gp
 from gurobipy import GRB
 
+#change to assume all edges exist
+# change to assume "demand" is one array but demand of angels index is q_a
+
+# activation_cost, angel_aid,
+
 def create_model(nodes_with_depot, nodes, vertices, angels, 
                  edges, edge_weights, activation_cost,
                  demand, angel_demand, angel_aid, communities,
