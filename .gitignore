@@ -1,5 +1,6 @@
 Instances/*
 Solutions/*
 !Instances/X-n101-k25.vrp
+!Instances/X-n11-k25.vrp
 !Solutions/X-n101-k25.sol
 __pycache__/
