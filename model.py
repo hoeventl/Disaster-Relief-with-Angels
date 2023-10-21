@@ -1,15 +1,16 @@
 import gurobipy as gp
 from gurobipy import GRB
-
-#change to assume all edges exist
-# change to assume "demand" is one array but demand of angels index is q_a
+from network import Network
+from itertools import combinations
 
 # activation_cost, angel_aid, are provided outside of network
 
-def create_model(nodes_with_depot, nodes, vertices, angels, 
-                 edges, edge_weights, activation_cost,
-                 demand, angel_demand, angel_aid, communities,
-                 vehicle_capacity, max_num_routes) -> gp.Model:
+def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[int], angels: list[int], 
+                 edge_weights: list[list[float]], activation_cost: list[int],
+                 demand: list[int], angel_demand: list[int], angel_aid: list[int], communities: list[list[int]],
+                 vehicle_capacity: int, max_num_routes: int) -> gp.Model:
+    
+    edges = combinations(nodes_with_depot, 2)
     m = gp.Model()
     x = m.addVars(edges, vtype=GRB.BINARY)
     z = m.addVars(nodes, vtype=GRB.BINARY)
@@ -52,3 +53,19 @@ def create_model(nodes_with_depot, nodes, vertices, angels,
         m.addConstr((u[i] <= vehicle_capacity), f"Uvar_upper_bound_{i}")
 
     return m
+
+def create_model_from_network(n: Network) -> gp.Model:
+    return create_model(
+        n.nodes_with_depot,
+        n.nodes,
+        n.vertices,
+        n.angels,
+        n.edge_weights,
+        n.activation_cost,
+        n.demand, 
+        n.angel_demand, 
+        n.angel_aid, 
+        n.communities,
+        n.vehicle_capacity, 
+        n.max_num_routes
+    )

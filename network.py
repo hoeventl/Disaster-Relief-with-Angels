@@ -1,4 +1,3 @@
-from typing import Any
 from vrplib.parse_distance import pairwise_euclidean
 from vrplib.read_instance import read_instance
 from numpy.random import default_rng
@@ -26,6 +25,17 @@ class Network:
         self.demand = self._instance['demand'].tolist()
         self.angel_demand = self._instance['angel_demand'].tolist()
         self.vehicle_capacity = self._instance['capacity']
+
+        # Arbitrarily determined
+        self.activation_cost = np.concatenate(
+            (np.zeros(len(self.nodes_with_depot - self._num_angels)), 
+             self._num_angels*self._rng.random(self._num_angels)
+             )).tolist()
+        self.angel_aid = np.concatenate(
+            (np.zeros(len(self.nodes_with_depot - self._num_angels)),
+             self._rng.integers(1, self.vehicle_capacity, self._num_angels)
+             )).tolist()
+        self.max_num_routes = 100
 
 
     def get_angel_parameters(self, num_angels: int = None, radius: float = None):
@@ -74,9 +84,3 @@ class Network:
             communities.append(community)
         return communities
     
-
-n = Network("Instances/X-n11-k25.vrp")
-# print(n._num_angels)
-# print(n.communities)
-print(n.demand)
-print(n.angel_demand)
