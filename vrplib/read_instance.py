@@ -1,7 +1,7 @@
 import os
 from typing import Any, Dict, Union
 
-from vrplib.parse import parse_solomon, parse_vrplib
+from .parse_vrplib import parse_vrplib
 
 
 def read_instance(
@@ -30,6 +30,7 @@ def read_instance(
         if instance_format == "vrplib":
             return parse_vrplib(fi.read(), compute_edge_weights)
         elif instance_format == "solomon":
-            return parse_solomon(fi.read(), compute_edge_weights)
+            # return parse_solomon(fi.read(), compute_edge_weights)
+            raise Exception("Not supporting solomon format within Disaster-Relief-with-Angels")
 
         raise ValueError(f"Format style {instance_format} not known.")

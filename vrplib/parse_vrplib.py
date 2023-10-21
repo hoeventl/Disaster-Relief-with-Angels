@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple, Union
 
 import numpy as np
 
-from .parse_distances import parse_distances
+from .parse_distance import parse_distances
 from .parse_utils import infer_type, text2lines
 
 Instance = Dict[str, Union[str, float, np.ndarray]]

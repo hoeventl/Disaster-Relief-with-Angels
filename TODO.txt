@@ -3,3 +3,7 @@ TODO
 -instead of relying on the library, copy the vrplib source code into so I can manipulate the graph as it is read in
 -how determine angels? number, demand, community
 -K is number of vehicles
+
+
+*-first solve with zero radius, this is to confirm that our formulation agrees with sol file
+-always assume "fully connected" with some distance matrix

@@ -2,3 +2,4 @@ Instances/*
 Solutions/*
 !Instances/X-n101-k25.vrp
 !Solutions/X-n101-k25.sol
+*.pyc
