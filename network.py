@@ -24,6 +24,7 @@ class Network:
         # These are values
         self.edge_weights = self._instance['edge_weight'].tolist()
         self.demand = self._instance['demand'].tolist()
+        self.angel_demand = self._instance['angel_demand'].tolist()
         self.vehicle_capacity = self._instance['capacity']
 
 
@@ -45,9 +46,11 @@ class Network:
         angels = self._rng.choice(self._instance['node_coord'], self._num_angels, replace=False)
         self._instance['node_coord'] = np.concatenate((self._instance['node_coord'], angels))
         max_demand = np.amax(self._instance['demand'])
-        self._instance['demand'] = np.concatenate((self._instance['demand'], 
-                                             self._rng.integers(0, max_demand, 
-                                                                size=self._num_angels)))
+        angel_demand = self._rng.integers(0, max_demand, size=self._num_angels)
+        self._instance['angel_demand'] = np.concatenate(
+            (np.zeros_like(self._instance['demand']), angel_demand))
+        self._instance['demand'] = np.concatenate(
+            (self._instance['demand'], np.zeros_like(angel_demand)))
         self._instance['edge_weight'] = pairwise_euclidean(self._instance['node_coord'])
         vertex_community = np.full(self._instance['edge_weight'][:-self._num_angels].shape, False)
         angel_community = self._instance['edge_weight'][-self._num_angels:] \
@@ -70,8 +73,10 @@ class Network:
                     community.append(j)
             communities.append(community)
         return communities
+    
 
-
-# n = Network("Instances/X-n11-k25.vrp")
+n = Network("Instances/X-n11-k25.vrp")
 # print(n._num_angels)
 # print(n.communities)
+print(n.demand)
+print(n.angel_demand)
