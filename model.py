@@ -9,7 +9,6 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
                  vehicle_capacity: int, max_num_routes: int) -> gp.Model:
     
     edges = sorted(combinations(nodes_with_depot, 2))
-    print(edges)
     m = gp.Model()
     x = m.addVars(edges, vtype=GRB.BINARY, name="x")
     z = m.addVars(nodes, vtype=GRB.BINARY, name="z")
@@ -28,28 +27,37 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
 
     # flow balance
     for n in nodes:
-        m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if j == n) 
-                    - gp.quicksum(x[(i,j)] for (i,j) in edges if i == n) 
+        m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if j == n) # flow in
+                    - gp.quicksum(x[(i,j)] for (i,j) in edges if i == n) # flow out
                     == 0), 
                     f"Flow_Balance_{n}")
         
     # max num routes leaving depot
     m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
-                "Routes_leaving_depot")
+                "Routes_leaving_depot_max")
+    
+    # this causes infeasiblity, without it, we get trivial solution
+    # force at least one route
+    m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) >= 1),
+                "Routes_leaving_depot_min")
 
     # MTZ multi-route
     for (i,j) in edges:
         if j != 0:
             m.addConstr((u[j] - u[i]
                             >= demand[j] 
-                            - gp.quicksum(angel_aid[a]*z[a] for a in angels if j in communities[a])
-                            + angel_demand[j]*z[j] 
+                            # - gp.quicksum(angel_aid[a]*z[a] for a in angels if j in communities[a])
+                            # + angel_demand[j]*z[j] 
                             - vehicle_capacity*(1-x[(i,j)])),
                             f"MTZ_{i}->{j}")
         
     # bounds on u vars
     for i in nodes:
-        m.addConstr((u[i] >= demand[i] + angel_demand[i]*z[i]), f"Uvar_lower_bound_{i}")
+        m.addConstr(
+                    # (
+                    u[i] >= demand[i]
+                    #  + angel_demand[i]*z[i]), 
+                    , f"Uvar_lower_bound_{i}")
         m.addConstr((u[i] <= vehicle_capacity), f"Uvar_upper_bound_{i}")
 
     return m

@@ -7,4 +7,5 @@ m = create_model_from_network(n)
 m.optimize()
 
 for v in m.getVars():
-    print(f"{v.VarName} = {v.X}")
+    if v.X > 0.5:
+        print(f"{v.VarName} = {v.X}")

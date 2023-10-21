@@ -45,9 +45,6 @@ for i in nodes:
 max_num_routes = 3 # K
 vehicle_capacity = 4 # Q
 
-# could probably have one master set which associates angels and their various sets and weights,
-# same for nodes
-
 
 m = gp.Model()
 x = m.addVars(edges, vtype=GRB.BINARY, name="x")
@@ -66,15 +63,20 @@ for a in angels:
 m.setObjective(cost, GRB.MINIMIZE)
 
 # flow balance
-for i in nodes:
-    m.addConstr((gp.quicksum(x[e] for e in edges if e[1] == i) 
-                - gp.quicksum(x[e] for e in edges if e[0] == i) 
+for n in nodes:
+    m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if j == n) # flow in
+                - gp.quicksum(x[(i,j)] for (i,j) in edges if i == n) # flow out
                 == 0), 
-                f"Flow_Balance_{i}")
+                f"Flow_Balance_{n}")
     
 # max num routes leaving depot
-m.addConstr((gp.quicksum(x[e] for e in edges if e[0] == 0) <= max_num_routes),
-            "Routes_leaving_depot")
+    m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
+                "Routes_leaving_depot_max")
+    
+# this causes infeasiblity, without it, we get trivial solution
+# force at least one route
+m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) >= 1),
+            "Routes_leaving_depot_min")
 
 # MTZ multi-route
 for (i,j) in edges:
