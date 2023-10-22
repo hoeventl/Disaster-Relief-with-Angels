@@ -64,14 +64,14 @@ m.setObjective(cost, GRB.MINIMIZE)
 
 # flow balance
 for n in nodes:
-    m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if j == n) # flow in
+    m.addConstr((gp.quicksum(x[(j,i)] for (j,i) in edges if i == n) # flow in
                 - gp.quicksum(x[(i,j)] for (i,j) in edges if i == n) # flow out
                 == 0), 
                 f"Flow_Balance_{n}")
     
 # max num routes leaving depot
-    m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
-                "Routes_leaving_depot_max")
+m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
+            "Routes_leaving_depot_max")
     
 # this causes infeasiblity, without it, we get trivial solution
 # force at least one route
