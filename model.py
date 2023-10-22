@@ -1,14 +1,14 @@
 import gurobipy as gp
 from gurobipy import GRB
 from network import Network
-from itertools import combinations
+from itertools import combinations_with_replacement
 
 def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[int], angels: list[int], 
                  edge_weights: list[list[float]], activation_cost: list[int],
                  demand: list[int], angel_demand: list[int], angel_aid: list[int], communities: list[list[int]],
                  vehicle_capacity: int, max_num_routes: int) -> gp.Model:
     
-    edges = sorted(combinations(nodes_with_depot, 2))
+    edges = [e for e in [(i,j) for i in nodes_with_depot for j in nodes_with_depot] if e[0] != e[1]]
     m = gp.Model()
     x = m.addVars(edges, vtype=GRB.BINARY, name="x")
     z = m.addVars(nodes, vtype=GRB.BINARY, name="z")
@@ -36,7 +36,7 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
     m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
                 "Routes_leaving_depot_max")
     
-    # this causes infeasiblity, without it, we get trivial solution
+    # without this constraint, we get trivial solution
     # force at least one route
     m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) >= 1),
                 "Routes_leaving_depot_min")

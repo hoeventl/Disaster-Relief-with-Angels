@@ -19,11 +19,12 @@ min_community_size = 1 if num_angels != 0 else 0
 
 # Sets
 vertices = sorted(sample(nodes, num_verts))
+# will be empty
 angels = sorted([k for k in nodes if k not in vertices])
+# will be empty
 communities = {a: [v for v in sample(vertices, randint(min_community_size, max_community_size))] 
                for a in angels} # completely random communities, not geographically based
-tmp = sample(list(combinations_with_replacement(nodes_with_depot, 2)), randint(2*n, int(n*n/2))) 
-edges = sorted([e for e in tmp if e[0] != e[1]]) # remove any self loops
+edges = [e for e in [(i,j) for i in nodes_with_depot for j in nodes_with_depot] if e[0] != e[1]]
 
 # Parameters
 edge_weights = {e: randint(1,n) for e in edges} # w_ij
@@ -44,7 +45,7 @@ for i in nodes:
         angel_demand[i] = 0
 max_num_routes = 3 # K
 vehicle_capacity = 4 # Q
-
+print(demand)
 
 m = gp.Model()
 x = m.addVars(edges, vtype=GRB.BINARY, name="x")
@@ -73,7 +74,7 @@ for n in nodes:
 m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
             "Routes_leaving_depot_max")
     
-# this causes infeasiblity, without it, we get trivial solution
+# without this constraint, we get trivial solution
 # force at least one route
 m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) >= 1),
             "Routes_leaving_depot_min")
@@ -95,4 +96,5 @@ for i in nodes:
 m.optimize()
 
 for v in m.getVars():
-    print(f"{v.VarName} = {v.X}")
+    if v.X > 0.5:
+        print(f"{v.VarName} = {v.X}")
