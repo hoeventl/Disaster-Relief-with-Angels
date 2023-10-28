@@ -1,2 +1,21 @@
 - update model.py to assume fully connected edge set
 *-first solve with zero radius, this is to confirm that our formulation agrees with sol file
+
+-add more comments describing the list structure in model.py
+
+Experiments:
+-one angel, huge radius, huge angel aid, very big demand
+-one angel for each cluster of vertices, varying demand
+-all angels, demand of one, angel aid of one, recover "close-enough" TSP
+
+Begin introduction, find anything to motviate this idea. This is not another made up problem for just math people
+Lit review: 
+    "visual review" show superceding problem formulation. This describes how our problem is generalized.
+    "dendrogram" (tougher) start from the latest developments in similar problems and work backwards and describe how those converge
+        --follows the history of the problem
+    Chrys to send examples of both
+
+Items for me:
+    - come up with experiments
+    - begin introduction
+    - code comments

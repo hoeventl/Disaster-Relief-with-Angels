@@ -1,3 +1,5 @@
+# Out of sync with updated model
+
 import gurobipy as gp
 from gurobipy import GRB
 from random import sample, randint, seed
@@ -44,7 +46,7 @@ for i in nodes:
         demand[i] = randint(1,2)
         angel_demand[i] = 0
 max_num_routes = 3 # K
-vehicle_capacity = 4 # Q
+vehicle_capacity = 10 # Q
 print(demand)
 
 m = gp.Model()
@@ -73,11 +75,6 @@ for n in nodes:
 # max num routes leaving depot
 m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),
             "Routes_leaving_depot_max")
-    
-# without this constraint, we get trivial solution
-# force at least one route
-m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) >= 1),
-            "Routes_leaving_depot_min")
 
 # MTZ multi-route
 for (i,j) in edges:

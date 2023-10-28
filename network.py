@@ -5,7 +5,8 @@ import numpy as np
 
 class Network:
 
-    def __init__(self, path: str, num_angels: int = None, radius: float = None) -> None:
+    def __init__(self, path: str, num_angels: int = None, radius: float = None, 
+                 max_num_routes: int = None) -> None:
         if path is None:
             raise ValueError("Must specify a .vrp file to load.")
         self._rng = default_rng()
@@ -35,7 +36,7 @@ class Network:
             (np.zeros(len(self.nodes_with_depot - self._num_angels)),
              self._rng.integers(1, self.vehicle_capacity, self._num_angels)
              )).tolist() if num_angels != 0 else []
-        self.max_num_routes = 10
+        self.max_num_routes = max_num_routes if max_num_routes is not None else 100
 
 
     def get_angel_parameters(self, num_angels: int = None, radius: float = None):
