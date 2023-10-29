@@ -1,4 +1,3 @@
-# placeholder file for now
 from network import *
 from experiment import *
 from model import *
