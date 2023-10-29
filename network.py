@@ -5,7 +5,7 @@ import numpy as np
 
 class Network:
 
-    def __init__(self, path: str, num_angels: int = None, radius: float = None, 
+    def __init__(self, path: str, num_angels: int = None, radius: float = None, aid: int = None,
                  max_num_routes: int = None) -> None:
         if path is None:
             raise ValueError("Must specify a .vrp file to load.")
@@ -29,12 +29,13 @@ class Network:
 
         # Arbitrarily determined
         self.activation_cost = np.concatenate(
-            (np.zeros(len(self.nodes_with_depot - self._num_angels)), 
+            (np.zeros(len(self.nodes_with_depot) - self._num_angels), 
              self._num_angels*self._rng.random(self._num_angels)
              )).tolist() if num_angels != 0 else []
         self.angel_aid = np.concatenate(
-            (np.zeros(len(self.nodes_with_depot - self._num_angels)),
-             self._rng.integers(1, self.vehicle_capacity, self._num_angels)
+            (np.zeros(len(self.nodes_with_depot) - self._num_angels),
+            #  self._rng.integers(1, self.vehicle_capacity, self._num_angels)
+            np.full(self._num_angels, np.amax(self._instance['demand'])) # force max aid possible for now
              )).tolist() if num_angels != 0 else []
         self.max_num_routes = max_num_routes if max_num_routes is not None else 100
 
@@ -47,6 +48,8 @@ class Network:
                 radius = 0
             else:
                 radius = self._rng.random()*np.amax(self._instance['edge_weight'])/3
+        elif radius == "max":
+            radius = np.amax(self._instance['edge_weight'])
         return num_angels, radius
 
     # Adds a random number angels with random demand to the instance
@@ -64,8 +67,10 @@ class Network:
             (self._instance['demand'], np.zeros_like(angel_demand)))
         self._instance['edge_weight'] = pairwise_euclidean(self._instance['node_coord'])
         vertex_community = np.full(self._instance['edge_weight'][:-self._num_angels].shape, False)
-        angel_community = self._instance['edge_weight'][-self._num_angels:] \
+        angel_to_vertex_community = self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
                                         <= self._radius
+        angel_to_angel_community = np.full((self._num_angels, self._num_angels), False)
+        angel_community = np.concatenate((angel_to_vertex_community, angel_to_angel_community),axis=1)
         self._instance['community'] = np.concatenate((vertex_community, angel_community))
 
     # Gets a set of indices which are the ground set of all nodes in the network including angels

@@ -1,7 +1,6 @@
 import gurobipy as gp
 from gurobipy import GRB
 from network import Network
-from itertools import combinations_with_replacement
 
 #nodes = [*vertices, *angels]
 # comm = [[],[],[], [1,2,3], [2,3]]

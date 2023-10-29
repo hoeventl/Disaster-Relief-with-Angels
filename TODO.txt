@@ -4,9 +4,9 @@
 -add more comments describing the list structure in model.py
 
 Experiments:
--one angel, huge radius, huge angel aid, very big demand
--one angel for each cluster of vertices, varying demand
--all angels, demand of one, angel aid of one, recover "close-enough" TSP
+1-one angel, huge radius, huge angel aid, very big demand
+2-one angel for each cluster of vertices, varying demand
+3-all angels, demand of one, angel aid of one, recover "close-enough" TSP
 
 Begin introduction, find anything to motviate this idea. This is not another made up problem for just math people
 Lit review: 
@@ -19,3 +19,10 @@ Items for me:
     - come up with experiments
     - begin introduction
     - code comments
+
+Currently each angel gets the same radius. Need to update this to allow for distinct radii
+Need to allow specification/style of aid of angels (random, max_demand, int, list?)
+
+
+--Currently experiment 1 works but have discovered that routing to activate the single angel 
+    does not necessarily come from the depot but just another node
