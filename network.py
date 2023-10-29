@@ -6,7 +6,7 @@ from re import search
 
 class Network:
 
-    def __init__(self, path: str, num_angels: int = None, radius: float = None, aid: int = None,
+    def __init__(self, path: str, num_angels: int = None, radius: float = None, aid = None,
                  max_num_routes: int = None) -> None:
         self._instance = read_instance(path)
         self._rng = default_rng()
@@ -29,16 +29,12 @@ class Network:
         self.demand = self._instance['demand'].tolist()
         self.angel_demand = self._instance['angel_demand'].tolist()
         self.vehicle_capacity = self._instance['capacity']
+        self.angel_aid = self.get_angel_aid(aid)
 
         # Arbitrarily determined
         self.activation_cost = np.concatenate(
             (np.zeros(len(self.nodes_with_depot) - self._num_angels), 
              self._num_angels*self._rng.random(self._num_angels)
-             )).tolist() if num_angels != 0 else []
-        self.angel_aid = np.concatenate(
-            (np.zeros(len(self.nodes_with_depot) - self._num_angels),
-            #  self._rng.integers(1, self.vehicle_capacity, self._num_angels)
-            np.full(self._num_angels, np.amax(self._instance['demand'])) # force max aid possible for now
              )).tolist() if num_angels != 0 else []
 
     def get_angel_parameters(self, num_angels: int = None, radius: float = None):
@@ -52,11 +48,26 @@ class Network:
         elif radius == "max":
             radius = np.amax(self._instance['edge_weight'])
         return num_angels, radius
+    
+    def get_angel_aid(self, aid = None) -> list[int]:
+        vertex_aid = np.zeros(len(self.nodes_with_depot) - self._num_angels)
+        if aid is None:
+            angel_aid = np.concatenate(
+            (vertex_aid,
+             self._rng.integers(1, np.amax(self._instance['demand']), self._num_angels)
+             )).tolist()
+        elif aid == "max":
+            angel_aid = np.concatenate(
+                (vertex_aid,
+                np.full(self._num_angels, np.amax(self._instance['demand']))
+                )).tolist()
+        elif aid > 0:
+             angel_aid = np.concatenate((vertex_aid, np.full(self._num_angels, aid))).tolist()
+        else:
+            angel_aid = []
+        return angel_aid
 
     # Adds a random number angels with random demand to the instance
-    # now assumes that "demand" is same array for vertices and angels
-    # the angels will always be the last X nodes in the list
-    # very dependent on the index now...
     def _add_angels_to_instance(self) -> None:
         angels = self._rng.choice(self._instance['node_coord'], self._num_angels, replace=False)
         self._instance['node_coord'] = np.concatenate((self._instance['node_coord'], angels))
