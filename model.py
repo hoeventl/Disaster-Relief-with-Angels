@@ -2,8 +2,15 @@ import gurobipy as gp
 from gurobipy import GRB
 from network import Network
 
-#nodes = [*vertices, *angels]
-# comm = [[],[],[], [1,2,3], [2,3]]
+# need to confirm these dimensions
+
+# nodes_with_depot = [0,1,2,3,4,...,n+m] (n+m+1 by 1)
+# nodes = [*vertices, *angels] = nodes_with_depot[1:] = nodes_with_depot \ {0}
+# vertices = [1,2,3,4,...,n-m-1,n-m]
+# angels = [n-m+1,n-m+2,...,n+m]
+# edge_weights = [[x,x,x,x,x],[x,x,x,x]] ... (n+m by n+m)
+# activation_cost = [0,0,0,0,0,...,x,x,x,...] nonzero for all angels (n+m by n+m)
+# communities = [[],[],[],...,[1,2,3], [2,3]] only valid for angels (n+m by n+m)
 
 def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[int], angels: list[int], 
                  edge_weights: list[list[float]], activation_cost: list[int],
