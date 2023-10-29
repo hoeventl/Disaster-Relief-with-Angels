@@ -58,6 +58,8 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
                             + angel_demand[j]*z[j] 
                             - vehicle_capacity*(1-x[(i,j)])),
                             f"MTZ_{i}->{j}")
+            # had to add this constraint to force routing starting from depot
+            m.addConstr((u[j] - u[i] >= -vehicle_capacity*(1-x[(i,j)])), f"Uvardiff_{i}->{j}")
     
     # max num routes leaving depot
     m.addConstr((gp.quicksum(x[(i,j)] for (i,j) in edges if i == 0) <= max_num_routes),

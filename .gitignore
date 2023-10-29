@@ -2,5 +2,7 @@ Instances/*
 Solutions/*
 !Instances/X-n101-k25.vrp
 !Instances/X-n11-k25.vrp
+!Instances/A-n32-k5.vrp
 !Solutions/X-n101-k25.sol
+!Solutions/A-n32-k5.sol
 __pycache__/
