@@ -29,13 +29,10 @@ class Network:
         self.demand = self._instance['demand'].tolist()
         self.angel_demand = self._instance['angel_demand'].tolist()
         self.vehicle_capacity = self._instance['capacity']
-        self.angel_aid = self.get_angel_aid(aid)
+        self.angel_aid = self.set_angel_aid(aid)
 
         # Arbitrarily determined
-        self.activation_cost = np.concatenate(
-            (np.zeros(len(self.nodes_with_depot) - self._num_angels), 
-             self._num_angels*self._rng.random(self._num_angels)
-             )).tolist() if num_angels != 0 else []
+        self.activation_cost = self.set_angel_activation_cost()
 
     def get_angel_parameters(self, num_angels: int = None, radius: float = None):
         if num_angels is None:
@@ -49,7 +46,7 @@ class Network:
             radius = np.amax(self._instance['edge_weight'])
         return num_angels, radius
     
-    def get_angel_aid(self, aid = None) -> list[int]:
+    def set_angel_aid(self, aid = None) -> list[int]:
         vertex_aid = np.zeros(len(self.nodes_with_depot) - self._num_angels)
         if aid is None:
             angel_aid = np.concatenate(
@@ -66,23 +63,39 @@ class Network:
         else:
             angel_aid = []
         return angel_aid
+    
+    def set_angel_activation_cost(self) -> list:
+        # update this to allow for explicit
+        return np.concatenate(
+            (np.zeros(len(self.nodes_with_depot) - self._num_angels), 
+             self._num_angels*self._rng.random(self._num_angels)
+             )).tolist() if self._num_angels != 0 else []
 
-    # Adds a random number angels with random demand to the instance
-    def _add_angels_to_instance(self) -> None:
+    def _add_angels_to_nodes(self) -> None:
+        # update this to allow for explicit set as coords or as a selection of existing nodes
         angels = self._rng.choice(self._instance['node_coord'], self._num_angels, replace=False)
         self._instance['node_coord'] = np.concatenate((self._instance['node_coord'], angels))
+
+    def _add_angel_demand(self) -> None:
+        # update this to allow for explicit list of demands
         max_demand = np.amax(self._instance['demand'])
         angel_demand = self._rng.integers(0, max_demand, size=self._num_angels)
         self._instance['angel_demand'] = np.concatenate(
             (np.zeros_like(self._instance['demand']), angel_demand))
         self._instance['demand'] = np.concatenate(
             (self._instance['demand'], np.zeros_like(angel_demand)))
+
+    def _update_edge_weights(self) -> None:
         self._instance['edge_weight'] = pairwise_euclidean(self._instance['node_coord'])
+
+    def _create_angel_communities(self) -> None:
+        # update this to allow for explicit lists of nodes
         vertex_community = np.full(
             self._instance['edge_weight'][:-self._num_angels].shape, 
             False) # top part of array
-        angel_to_vertex_community = self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
-                                        <= self._radius # bottom left of array
+        angel_to_vertex_community = \
+            self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
+                <= self._radius # bottom left of array
         angel_to_angel_community = np.full(
             self._instance['edge_weight'][-self._num_angels:,-self._num_angels:].shape,
             False) # bottom right of array
@@ -91,6 +104,13 @@ class Network:
              angel_to_angel_community),
              axis=1) # bottom part of array
         self._instance['community'] = np.concatenate((vertex_community, angel_community))
+
+    # Adds a random number angels with random demand to the instance
+    def _add_angels_to_instance(self) -> None:
+        self._add_angels_to_nodes()
+        self._add_angel_demand()
+        self._update_edge_weights()
+        self._create_angel_communities()
 
     # Gets a set of indices which are the ground set of all nodes in the network including angels
     def get_nodes_with_depot(self) -> list:
