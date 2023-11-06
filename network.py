@@ -12,7 +12,7 @@ class Network:
                  radius: float = None, 
                  aid = int | list,
                  max_num_routes: int = None, 
-                 locs: list = None, 
+                 angel_locs: list = None, 
                  angel_demand: int | list = None) -> None:
         """
         Please make sure that you provide num_angels if locs or aid is provided as an explicit list
@@ -20,7 +20,7 @@ class Network:
         self._instance = read_instance(path)
         self._rng = default_rng()
         self._num_angels, self._radius = self.set_angel_parameters(num_angels, radius)
-        self._add_angels_to_instance(locs, angel_demand)
+        self._add_angels_to_instance(angel_locs, angel_demand)
         if max_num_routes is None:
             self.max_num_routes = int(search("-k(.*).vrp", path).group(1)) # https://stackoverflow.com/a/3369000
         else:
