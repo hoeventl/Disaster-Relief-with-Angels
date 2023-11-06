@@ -87,7 +87,7 @@ class Network:
         return angel_aid
     
     def set_angel_activation_cost(self, cost: int | list = None) -> list:
-        # overkill for this parameter. Accidentally mixed this up with angel_demand
+        # overkill for this parameter
         if self._num_angels == 0:
             return []
         vertex_activation_costs = np.zeros(len(self.nodes_with_depot) - self._num_angels)
@@ -168,4 +168,7 @@ class Network:
                     community.append(j)
             communities.append(community)
         return communities
+    
+    def get_coordinates(self) -> dict:
+        return {k:v for k,v in enumerate(self._instance['node_coord'].tolist())}
     

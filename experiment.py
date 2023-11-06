@@ -32,3 +32,24 @@ def one_under_each() -> Network:
     n.vehicle_capacity = 100
     n.max_num_routes = 1
     return n
+
+def simple() -> Network:
+    """
+    Creates a simple example of vehicle routing with 3 angels in place.
+    """
+    n = Network("Instances/X-n11-k25.vrp", num_angels=3, radius=100)
+    n.demand = [5 if d > 0 else 0 for d in n.demand]
+    n.angel_demand = [8 if d > 0 else 0 for d in n.angel_demand]
+    n.angel_aid = [5 if a > 0 else 0 for a in n.angel_aid]
+    n.activation_cost = [1 if c > 0 else 0 for c in n.activation_cost]
+    n.vehicle_capacity = 16
+    n.max_num_routes = 7
+    return n
+
+def regular_vrp() -> Network:
+    """
+    Creates a regular vehicle routing problem without angels. This is primarliy used for 
+    verification that the model formulation is valid for the reduced problem.
+    """
+    n = Network("Instances/A-n32-k5.vrp", num_angels=0)
+    return n
