@@ -6,7 +6,6 @@ from re import search
 
 class Network:
 
-    # Please make sure that you provide num_angels if locs or aid is provided as an explicit list
     def __init__(self, 
                  path: str, 
                  num_angels: int = None, 
@@ -15,6 +14,9 @@ class Network:
                  max_num_routes: int = None, 
                  locs: list = None, 
                  angel_demand: int | list = None) -> None:
+        """
+        Please make sure that you provide num_angels if locs or aid is provided as an explicit list
+        """
         self._instance = read_instance(path)
         self._rng = default_rng()
         self._num_angels, self._radius = self.set_angel_parameters(num_angels, radius)
