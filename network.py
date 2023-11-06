@@ -10,7 +10,7 @@ class Network:
                  path: str, 
                  num_angels: int = None, 
                  radius: float = None, 
-                 aid = int | list,
+                 aid: int | list = None,
                  max_num_routes: int = None, 
                  angel_locs: list = None, 
                  angel_demand: int | list = None) -> None:
