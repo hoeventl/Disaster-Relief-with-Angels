@@ -3,9 +3,11 @@ from experiment import *
 from model import *
 import sys
 
-n = Network("Instances/A-n32-k5.vrp", num_angels=1, radius="max", aid="max")
-m = create_model_from_network(n)
+# n = Network("Instances/A-n32-k5.vrp", num_angels=1, radius="max", aid="max")
+# m = create_model_from_network(n)
 # m = create_model_from_network(one_for_all())
+# m = create_model_from_network(one_per_cluster())
+m = create_model_from_network(one_under_each())
 m.optimize()
 with open("output.txt", "w") as sys.stdout:
     m.display()

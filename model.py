@@ -46,7 +46,7 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
                     >= (demand[n] 
                     - gp.quicksum(angel_aid[a]*z[a] for a in angels if n in communities[a])
                     + angel_demand[n]*z[n]
-                    ) / (demand[n] + angel_demand[n])),
+                    ) / float(demand[n] + angel_demand[n])),
                     f"Require_flow_in_{n}")
         
         # bounds on u variables

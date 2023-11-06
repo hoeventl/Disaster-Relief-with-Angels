@@ -1,14 +1,32 @@
-# a set of pre-defined experiment creation functions
 from network import Network
 
 def one_for_all() -> Network:
+    """
+    Creates a network which has exactly one angel with maximum radius (covers all vertices) and 
+    has aid equal to the vertex with the largest demand (satisfies all vertices)
+    solution should be route directly to the angel and back, nowhere else.
+    """
     # currently will make one angel in a random shadow location but covers all nodes
-    # would like to decide amount of aid too
-    n = Network("Instances/A-n32-k5.vrp", num_angels=0, radius="max")
-    
+    n = Network("Instances/A-n32-k5.vrp", num_angels=1, radius="max", aid="max")
+    return n
 
-    # scrap this, just use an instance from vrp set A or set B... see downloads
-    # then add an angel
-    # much easier to use existing code
+def one_per_cluster() -> Network:
+    """
+    Creates a network which has one angel per cluster of nodes. Original graph has distinct areas
+    for vertices.
+    """
+    locs = [3,19,25,31] # list of nodes to create an angel under
+    n = Network("Instances/B-n31-k5.vrp", num_angels=len(locs), locs=locs, radius=15, aid="max")
+    return n
 
+def one_under_each() -> Network:
+    """
+    Creates a network which has an angel directly under each vertex. Each angel can satisfy all 
+    demands. Each angel has a non-trivial radius (community). This recovers the TSP-cover problem.
+    """
+    n = Network("Instances/A-n32-k5.vrp", num_angels="max", radius=20, aid="max")
+    n.demand = [1 if d > 0 else 0 for d in n.demand]
+    n.angel_demand = [1 if d > 0 else 0 for d in n.angel_demand]
+    n.angel_aid = [1 if a > 0 else 0 for a in n.angel_aid]
+    n.activation_cost = [1 if c > 0 else 0 for c in n.activation_cost]
     return n

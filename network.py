@@ -6,12 +6,19 @@ from re import search
 
 class Network:
 
-    def __init__(self, path: str, num_angels: int = None, radius: float = None, aid = None,
-                 max_num_routes: int = None) -> None:
+    # Please make sure that you provide num_angels if locs or aid is provided as an explicit list
+    def __init__(self, 
+                 path: str, 
+                 num_angels: int = None, 
+                 radius: float = None, 
+                 aid = int | list,
+                 max_num_routes: int = None, 
+                 locs: list = None, 
+                 angel_demand: int | list = None) -> None:
         self._instance = read_instance(path)
         self._rng = default_rng()
-        self._num_angels, self._radius = self.get_angel_parameters(num_angels, radius)
-        self._add_angels_to_instance()
+        self._num_angels, self._radius = self.set_angel_parameters(num_angels, radius)
+        self._add_angels_to_instance(locs, angel_demand)
         if max_num_routes is None:
             self.max_num_routes = int(search("-k(.*).vrp", path).group(1)) # https://stackoverflow.com/a/3369000
         else:
@@ -32,11 +39,24 @@ class Network:
         self.angel_aid = self.set_angel_aid(aid)
 
         # Arbitrarily determined
-        self.activation_cost = self.set_angel_activation_cost()
+        self.activation_cost = self.set_angel_activation_cost() # probablu does not need to be detemined here but in model
 
-    def get_angel_parameters(self, num_angels: int = None, radius: float = None):
+    # def _check_angel_sizes(self, aid, locs) -> bool | int:
+    #     if aid is None and isinstance(locs,list):
+    #         return len(locs)
+    #     if locs is None and aid is not None:
+    #         return len(aid)
+    #     if isinstance(aid,list) and isinstance(locs,list):
+    #         num_angels = len(aid)
+    #         if num_angels == len(locs): 
+    #             return num_angels
+    #     return False
+
+    def set_angel_parameters(self, num_angels: int = None, radius: float = None):
         if num_angels is None:
             num_angels = self._rng.integers(1,self._instance['node_coord'].shape[0]/3)
+        elif num_angels == "max":
+            num_angels = self._instance['node_coord'].shape[0] - 1 # exclude depot
         if radius is None:
             if num_angels == 0:
                 radius = 0
@@ -64,22 +84,40 @@ class Network:
             angel_aid = []
         return angel_aid
     
-    def set_angel_activation_cost(self) -> list:
-        # update this to allow for explicit
-        return np.concatenate(
-            (np.zeros(len(self.nodes_with_depot) - self._num_angels), 
-             self._num_angels*self._rng.random(self._num_angels)
-             )).tolist() if self._num_angels != 0 else []
+    def set_angel_activation_cost(self, cost: int | list = None) -> list:
+        # overkill for this parameter. Accidentally mixed this up with angel_demand
+        if self._num_angels == 0:
+            return []
+        vertex_activation_costs = np.zeros(len(self.nodes_with_depot) - self._num_angels)
+        if cost is None:
+            angel_activation_costs = self._rng.integers(1, 
+                                                  self._num_angels, 
+                                                  size=self._num_angels)
+        elif isinstance(cost, int):
+            angel_activation_costs = np.full(self._num_angels, cost)
+        elif isinstance(cost, list):
+            angel_activation_costs = np.asarray(cost)
+        return np.concatenate((vertex_activation_costs, angel_activation_costs)).tolist()
 
-    def _add_angels_to_nodes(self) -> None:
-        # update this to allow for explicit set as coords or as a selection of existing nodes
-        angels = self._rng.choice(self._instance['node_coord'], self._num_angels, replace=False)
+    def _add_angels_to_nodes(self, locs: list = None) -> None:
+        if locs is None:
+            angels = self._rng.choice(self._instance['node_coord'], self._num_angels, replace=False)
+        elif isinstance(locs[0], tuple):
+            angels = locs
+        elif isinstance(locs[0], int):
+            angels = self._instance['node_coord'][[i-1 for i in locs]]
         self._instance['node_coord'] = np.concatenate((self._instance['node_coord'], angels))
 
-    def _add_angel_demand(self) -> None:
+    def _add_angel_demand(self, demand: int | list = None) -> None:
         # update this to allow for explicit list of demands
         max_demand = np.amax(self._instance['demand'])
-        angel_demand = self._rng.integers(0, max_demand, size=self._num_angels)
+        if demand is None:
+            angel_demand = self._rng.integers(1, max_demand, size=self._num_angels)
+        elif isinstance(demand, int):
+            angel_demand = np.full(self._num_angels, demand)
+        elif isinstance(demand, list):
+            angel_demand = np.asarray(demand)
+
         self._instance['angel_demand'] = np.concatenate(
             (np.zeros_like(self._instance['demand']), angel_demand))
         self._instance['demand'] = np.concatenate(
@@ -106,9 +144,9 @@ class Network:
         self._instance['community'] = np.concatenate((vertex_community, angel_community))
 
     # Adds a random number angels with random demand to the instance
-    def _add_angels_to_instance(self) -> None:
-        self._add_angels_to_nodes()
-        self._add_angel_demand()
+    def _add_angels_to_instance(self, locs: list = None, angel_demand: int | list = None) -> None:
+        self._add_angels_to_nodes(locs)
+        self._add_angel_demand(angel_demand)
         self._update_edge_weights()
         self._create_angel_communities()
 

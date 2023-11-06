@@ -1,9 +1,9 @@
-- update model.py to assume fully connected edge set
-*-first solve with zero radius, this is to confirm that our formulation agrees with sol file
+DONE- update model.py to assume fully connected edge set
+*-first solve with zero angels, this is to confirm that our formulation agrees with sol file
 
 -add more comments describing the list structure in model.py
 
-Experiments:
+DONE Experiments:
 1-one angel, huge radius, huge angel aid, very big demand
 2-one angel for each cluster of vertices, varying demand
 3-all angels, demand of one, angel aid of one, recover "close-enough" TSP
@@ -20,9 +20,9 @@ Items for me:
     - begin introduction
     - code comments
 
-Currently each angel gets the same radius. Need to update this to allow for distinct radii
+DONE Currently each angel gets the same radius. Need to update this to allow for distinct radii
 Need to allow specification/style of aid of angels (random, max_demand, int, list?)
 
 
---Currently experiment 1 works but have discovered that routing to activate the single angel 
+FIXED--Currently experiment 1 works but have discovered that routing to activate the single angel 
     does not necessarily come from the depot but just another node
