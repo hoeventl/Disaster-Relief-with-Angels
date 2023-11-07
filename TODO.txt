@@ -9,3 +9,9 @@ Items for me:
     - come up with experiments
     - begin introduction
     - code comments
+
+Looks like solutions are going from angel -> shadow node -> angel -> shadow node
+    At least in "one_per_cluster"
+    May need to add a nonzero (some epsilon) on edge weight from angel to/from shadow
+
+Struggling on dual side (Gurobi)
