@@ -92,9 +92,9 @@ class Network:
             return []
         vertex_activation_costs = np.zeros(len(self.nodes_with_depot) - self._num_angels)
         if cost is None:
-            angel_activation_costs = self._rng.integers(1, 
-                                                  self._num_angels, 
-                                                  size=self._num_angels)
+            angel_activation_costs = self._rng.random(self._num_angels) \
+                                        * np.amax(self._instance['node_coord']) \
+                                        + 1
         elif isinstance(cost, int):
             angel_activation_costs = np.full(self._num_angels, cost)
         elif isinstance(cost, list):
