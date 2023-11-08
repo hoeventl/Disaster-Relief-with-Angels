@@ -4,15 +4,15 @@ from experiment import *
 from model import *
 from plot import *
 
-n = one_per_cluster()
-m = create_model_from_network(n)
-m.optimize()
+network = one_per_cluster()
+model = create_model_from_network(network)
+model.optimize()
 with open("output.txt", "w") as sys.stdout:
-    m.display()
+    model.display()
 sys.stdout = sys.__stdout__
 
-for v in m.getVars():
+for v in model.getVars():
     if v.X > 0.5:
         print(f"{v.VarName} = {v.X}")
 
-draw(n,m)
+draw(network,model)
