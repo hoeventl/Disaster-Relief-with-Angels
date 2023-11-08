@@ -9,13 +9,16 @@ def draw(network: Network, model: Model) -> None:
     """
     active_edges = []
     active_angels = []
+    angels = network.nodes[-network._num_angels:]
     for v in model.getVars():
         if v.X > 0.5:
             if v.Varname.startswith("x"):
                 active_edges.append(tuple(eval(v.Varname[1:])))
             if v.Varname.startswith("z"):
                 active_angels.append(eval(v.Varname[1:])[0])
-    
+    inactive_angels = [a for a in angels if a not in active_angels]
+
+
     G = nx.DiGraph()
     coords = network.get_coordinates()
     G.add_nodes_from(coords)
@@ -25,6 +28,8 @@ def draw(network: Network, model: Model) -> None:
     for n in G.nodes():
         if n in active_angels:
             color_map.append('blue')
+        elif n in inactive_angels:
+            color_map.append('green')
         elif n == 0:
             color_map.append('black')
         else:

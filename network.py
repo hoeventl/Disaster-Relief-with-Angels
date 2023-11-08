@@ -103,7 +103,7 @@ class Network:
 
     def _add_angels_to_nodes(self, locs: list = None) -> None:
         if locs is None:
-            angels = self._rng.choice(self._instance['node_coord'], self._num_angels, replace=False)
+            angels = self._rng.choice(self._instance['node_coord'][1:], self._num_angels, replace=False)
         elif isinstance(locs[0], tuple):
             angels = locs
         elif isinstance(locs[0], int):

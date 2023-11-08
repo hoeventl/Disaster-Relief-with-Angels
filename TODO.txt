@@ -4,14 +4,19 @@ Lit review:
     "dendrogram" (tougher) start from the latest developments in similar problems and work backwards and describe how those converge
         --follows the history of the problem
     Chrys to send examples of both
-
-Items for me:
-    - come up with experiments
-    - begin introduction
-    - code comments
+    "table" kinda do a direct comparison and explain how we are different/similar
 
 Looks like solutions are going from angel -> shadow node -> angel -> shadow node
     At least in "one_per_cluster"
     May need to add a nonzero (some epsilon) on edge weight from angel to/from shadow
 
 Struggling on dual side (Gurobi)
+
+
+11/8/23 
+Items for me:
+    - write abstract!! due for us Nov 15!! due Nov 17? 
+    - literature review
+    - find example of where community came to help (as we go, not urgent)
+
+Draw radii, (use an empty node and specify size [scaling is weird])
