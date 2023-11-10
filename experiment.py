@@ -28,7 +28,7 @@ def one_under_each() -> Network:
     n.demand = [1 if d > 0 else 0 for d in n.demand]
     n.angel_demand = [1 if d > 0 else 0 for d in n.angel_demand]
     n.angel_aid = [1 if a > 0 else 0 for a in n.angel_aid]
-    n.activation_cost = [1 if c > 0 else 0 for c in n.activation_cost]
+    n.activation_cost = [0 for c in n.activation_cost]
     n.vehicle_capacity = 100
     n.max_num_routes = 1
     return n
