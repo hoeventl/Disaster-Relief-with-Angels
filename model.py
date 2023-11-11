@@ -17,6 +17,7 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
                  demand: list[int], angel_demand: list[int], angel_aid: list[int], communities: list[list[int]],
                  vehicle_capacity: int, max_num_routes: int) -> gp.Model:
     
+    EPSILON = 1e-5 # needed to prevent "self" loops from vertex to angel below and back
     edges = [e for e in [(i,j) for i in nodes_with_depot for j in nodes_with_depot] if e[0] != e[1]]
     m = gp.Model()
     x = m.addVars(edges, vtype=GRB.BINARY, name="x")
@@ -29,7 +30,7 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
 
     cost = 0
     for (i,j) in edges:
-        cost += edge_weights[i][j]*x[(i,j)]
+        cost += (edge_weights[i][j]+EPSILON)*x[(i,j)]
     for a in angels:
         cost+= activation_cost[a]*z[a]
     m.setObjective(cost, GRB.MINIMIZE)
