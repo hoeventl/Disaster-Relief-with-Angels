@@ -12,11 +12,4 @@ Looks like solutions are going from angel -> shadow node -> angel -> shadow node
 
 Struggling on dual side (Gurobi)
 
-
-11/8/23 
-Items for me:
-    - write abstract!! due for us Nov 15!! due Nov 17? 
-    - literature review
-    - find example of where community came to help (as we go, not urgent)
-
 Draw radii, (use an empty node and specify size [scaling is weird])

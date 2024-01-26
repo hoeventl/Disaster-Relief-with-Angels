@@ -9,11 +9,12 @@ class Network:
     def __init__(self, 
                  path: str, 
                  num_angels: int = None, 
-                 radius: float = None, 
+                 radius: float | str | list = None, 
                  aid: int | list = None,
                  max_num_routes: int = None, 
                  angel_locs: list = None, 
-                 angel_demand: int | list = None) -> None:
+                 angel_demand: int | list = None,
+                 activation_cost = int | list | None) -> None:
         """
         Please make sure that you provide num_angels if locs or aid is provided as an explicit list
         """
@@ -41,7 +42,7 @@ class Network:
         self.angel_aid = self.set_angel_aid(aid)
 
         # Arbitrarily determined
-        self.activation_cost = self.set_angel_activation_cost() # probablu does not need to be detemined here but in model
+        self.activation_cost = self.set_angel_activation_cost(activation_cost) # probably does not need to be detemined here but in model
 
     # def _check_angel_sizes(self, aid, locs) -> bool | int:
     #     if aid is None and isinstance(locs,list):
@@ -54,7 +55,7 @@ class Network:
     #             return num_angels
     #     return False
 
-    def set_angel_parameters(self, num_angels: int = None, radius: float = None):
+    def set_angel_parameters(self, num_angels: int | None, radius: float | str | list | None):
         if num_angels is None:
             num_angels = self._rng.integers(1,self._instance['node_coord'].shape[0]/3)
         elif num_angels == "max":
@@ -66,9 +67,11 @@ class Network:
                 radius = self._rng.random()*np.amax(self._instance['edge_weight'])/3
         elif radius == "max":
             radius = np.amax(self._instance['edge_weight'])
+        elif isinstance(radius, list):
+            radius = radius
         return num_angels, radius
     
-    def set_angel_aid(self, aid = None) -> list[int]:
+    def set_angel_aid(self, aid: int | str | None) -> list[int]:
         vertex_aid = np.zeros(len(self.nodes_with_depot) - self._num_angels)
         if aid is None:
             angel_aid = np.concatenate(
@@ -86,7 +89,7 @@ class Network:
             angel_aid = []
         return angel_aid
     
-    def set_angel_activation_cost(self, cost: int | list = None) -> list:
+    def set_angel_activation_cost(self, cost: int | list | None) -> list:
         # overkill for this parameter
         if self._num_angels == 0:
             return []
@@ -101,7 +104,7 @@ class Network:
             angel_activation_costs = np.asarray(cost)
         return np.concatenate((vertex_activation_costs, angel_activation_costs)).tolist()
 
-    def _add_angels_to_nodes(self, locs: list = None) -> None:
+    def _add_angels_to_nodes(self, locs: list | None) -> None:
         if locs is None:
             angels = self._rng.choice(self._instance['node_coord'][1:], self._num_angels, replace=False)
         elif isinstance(locs[0], tuple):
@@ -110,8 +113,7 @@ class Network:
             angels = self._instance['node_coord'][[i-1 for i in locs]]
         self._instance['node_coord'] = np.concatenate((self._instance['node_coord'], angels))
 
-    def _add_angel_demand(self, demand: int | list = None) -> None:
-        # update this to allow for explicit list of demands
+    def _add_angel_demand(self, demand: int | list | None) -> None:
         max_demand = np.amax(self._instance['demand'])
         if demand is None:
             angel_demand = self._rng.integers(1, max_demand, size=self._num_angels)
@@ -129,13 +131,22 @@ class Network:
         self._instance['edge_weight'] = pairwise_euclidean(self._instance['node_coord'])
 
     def _create_angel_communities(self) -> None:
-        # update this to allow for explicit lists of nodes
-        vertex_community = np.full(
+        vertex_to_vertex_community = np.full(
             self._instance['edge_weight'][:-self._num_angels].shape, 
             False) # top part of array
-        angel_to_vertex_community = \
-            self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
-                <= self._radius # bottom left of array
+        
+        angel_to_vertex_community = np.zeros_like(\
+            self._instance['edge_weight'][-self._num_angels:,:-self._num_angels]) # bottom left of array
+        if isinstance(self._radius, list):
+            for a in range(self._num_angels):
+                community = self._instance['edge_weight'][-(self._num_angels+a),:-self._num_angels] \
+                    <= self._radius[a]
+                angel_to_vertex_community[a] = community
+        else:
+            angel_to_vertex_community = \
+                self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
+                    <= self._radius
+
         angel_to_angel_community = np.full(
             self._instance['edge_weight'][-self._num_angels:,-self._num_angels:].shape,
             False) # bottom right of array
@@ -143,10 +154,10 @@ class Network:
             (angel_to_vertex_community, 
              angel_to_angel_community),
              axis=1) # bottom part of array
-        self._instance['community'] = np.concatenate((vertex_community, angel_community))
+        self._instance['community'] = np.concatenate((vertex_to_vertex_community, angel_community))
 
     # Adds a random number angels with random demand to the instance
-    def _add_angels_to_instance(self, locs: list = None, angel_demand: int | list = None) -> None:
+    def _add_angels_to_instance(self, locs: list | None, angel_demand: int | list | None) -> None:
         self._add_angels_to_nodes(locs)
         self._add_angel_demand(angel_demand)
         self._update_edge_weights()
@@ -170,5 +181,9 @@ class Network:
         return communities
     
     def get_coordinates(self) -> dict:
+        """
+        Returns a dictionary of the nodes in the graph [vertices, angels] where the key is the index
+        and the value is the Euclidean coordinates taken from the instance.
+        """
         return {k:v for k,v in enumerate(self._instance['node_coord'].tolist())}
     
