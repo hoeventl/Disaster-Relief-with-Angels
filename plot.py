@@ -19,6 +19,7 @@ def draw(network: Network, model: Model) -> None:
     inactive_angels = [a for a in angels if a not in active_angels]
 
     coords = network.get_coordinates()
+    radii_coords = [coords[a] for a in angels]
     # active_radii = [(coords[a], network._radius[a]) for a in active_angels]
 
     G = nx.DiGraph()
@@ -27,7 +28,6 @@ def draw(network: Network, model: Model) -> None:
     # num_nodes = G.number_of_nodes()
 
     color_map = []
-    radii_nodes = []
     for n in G.nodes():
         if n in active_angels:
             color_map.append('blue')
@@ -44,6 +44,23 @@ def draw(network: Network, model: Model) -> None:
             node_color=color_map, 
             node_size=100, 
             with_labels=True)
+    
+    
+    # add radii around angels
+    ax = plt.gca()
+    count = 0
+    for a in angels:
+        color = 'blue' if a in active_angels else 'purple'
+        c = plt.Circle(radii_coords[count], 
+                       radius=network._radius[count], 
+                       fill=False, 
+                       color=color,
+                       linestyle='--')
+        ax.add_patch(c)
+        count = count+1
+    plt.axis('equal')
+
+
     plt.show()
     
 
