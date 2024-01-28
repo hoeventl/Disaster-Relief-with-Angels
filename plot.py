@@ -20,31 +20,26 @@ def draw(network: Network, model: Model) -> None:
 
     coords = network.get_coordinates()
     radii_coords = [coords[a] for a in angels]
-    # active_radii = [(coords[a], network._radius[a]) for a in active_angels]
 
     G = nx.DiGraph()
     G.add_nodes_from(coords)
     G.add_edges_from(active_edges)
-    # num_nodes = G.number_of_nodes()
 
     color_map = []
     for n in G.nodes():
         if n in active_angels:
             color_map.append('blue')
-            # radii_nodes.append((coords[n], ))  how add radii??
         elif n in inactive_angels:
             color_map.append('purple')
         elif n == 0: # depot
             color_map.append('black')
         else: # vertex
             color_map.append('red')
-
     nx.draw(G, 
             pos=coords, 
             node_color=color_map, 
             node_size=100, 
             with_labels=True)
-    
     
     # add radii around angels
     ax = plt.gca()
@@ -59,7 +54,6 @@ def draw(network: Network, model: Model) -> None:
         ax.add_patch(c)
         count = count+1
     plt.axis('equal')
-
 
     plt.show()
     

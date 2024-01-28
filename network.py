@@ -138,19 +138,12 @@ class Network:
         vertex_to_vertex_community = np.full(
             self._instance['edge_weight'][:-self._num_angels].shape, 
             False) # top part of array
-        
         angel_to_vertex_community = np.zeros_like(\
             self._instance['edge_weight'][-self._num_angels:,:-self._num_angels]) # bottom left of array
-        # if isinstance(self._radius, list):
         for a in range(self._num_angels):
             community = self._instance['edge_weight'][-(self._num_angels+a),:-self._num_angels] \
                 <= self._radius[a]
             angel_to_vertex_community[a] = community
-        # else:
-        #     angel_to_vertex_community = \
-        #         self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
-        #             <= self._radius
-
         angel_to_angel_community = np.full(
             self._instance['edge_weight'][-self._num_angels:,-self._num_angels:].shape,
             False) # bottom right of array

@@ -4,20 +4,21 @@ from network import Network
 
 # need to confirm these dimensions
 
-# nodes_with_depot = [0,1,2,3,4,...,n+m] (n+m+1 by 1)
-# nodes = [*vertices, *angels] = nodes_with_depot[1:] = nodes_with_depot \ {0}
-# vertices = [1,2,3,4,...,n-m-1,n-m]
-# angels = [n-m+1,n-m+2,...,n+m]
-# edge_weights = [[x,x,x,x,x],[x,x,x,x]] ... (n+m by n+m)
-# activation_cost = [0,0,0,0,0,...,x,x,x,...] nonzero for all angels (n+m by n+m)
-# communities = [[],[],[],...,[1,2,3], [2,3]] only valid for angels (n+m by n+m)
-
 def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[int], angels: list[int], 
                  edge_weights: list[list[float]], activation_cost: list[int],
                  demand: list[int], angel_demand: list[int], angel_aid: list[int], communities: list[list[int]],
                  vehicle_capacity: int, max_num_routes: int) -> gp.Model:
+    """ 
+    nodes_with_depot = [0,1,2,3,4,...,n+m] (n+m+1 by 1)
+    nodes = [*vertices, *angels] = nodes_with_depot[1:] = nodes_with_depot \ {0}
+    vertices = [1,2,3,4,...,n-m-1,n-m]
+    angels = [n-m+1,n-m+2,...,n+m]
+    edge_weights = [[x,x,x,x,x],[x,x,x,x]] ... (n+m by n+m)
+    activation_cost = [0,0,0,0,0,...,x,x,x,...] nonzero for all angels (n+m by n+m)
+    communities = [[],[],[],...,[1,2,3], [2,3]] only valid for angels (n+m by n+m)
+    """
     
-    EPSILON = 1e-5 # needed to prevent "self" loops from vertex to angel below and back
+    EPSILON = 1e-4 # needed to prevent "self" loops from vertex to angel below and back
     edges = [e for e in [(i,j) for i in nodes_with_depot for j in nodes_with_depot] if e[0] != e[1]]
     m = gp.Model()
     x = m.addVars(edges, vtype=GRB.BINARY, name="x")
