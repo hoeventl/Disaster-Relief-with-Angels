@@ -19,7 +19,7 @@ def draw(network: Network, model: Model) -> None:
     inactive_angels = [a for a in angels if a not in active_angels]
 
     coords = network.get_coordinates()
-    active_radii = [(coords[a], network._radius) for a in active_angels]
+    # active_radii = [(coords[a], network._radius[a]) for a in active_angels]
 
     G = nx.DiGraph()
     G.add_nodes_from(coords)

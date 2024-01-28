@@ -62,13 +62,17 @@ class Network:
             num_angels = self._instance['node_coord'].shape[0] - 1 # exclude depot
         if radius is None:
             if num_angels == 0:
-                radius = 0
+                radius = [0]
             else:
-                radius = self._rng.random()*np.amax(self._instance['edge_weight'])/3
+                radius = [self._rng.random()*np.amax(self._instance['edge_weight'])/3 \
+                          for _ in range(num_angels)]
         elif radius == "max":
-            radius = np.amax(self._instance['edge_weight'])
+            radius = [np.amax(self._instance['edge_weight']) \
+                      for _ in range(num_angels)]
         elif isinstance(radius, list):
             radius = radius
+        elif isinstance(radius, int):
+            radius = [radius for _ in range(num_angels)]
         return num_angels, radius
     
     def set_angel_aid(self, aid: int | str | None) -> list[int]:
@@ -137,15 +141,15 @@ class Network:
         
         angel_to_vertex_community = np.zeros_like(\
             self._instance['edge_weight'][-self._num_angels:,:-self._num_angels]) # bottom left of array
-        if isinstance(self._radius, list):
-            for a in range(self._num_angels):
-                community = self._instance['edge_weight'][-(self._num_angels+a),:-self._num_angels] \
-                    <= self._radius[a]
-                angel_to_vertex_community[a] = community
-        else:
-            angel_to_vertex_community = \
-                self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
-                    <= self._radius
+        # if isinstance(self._radius, list):
+        for a in range(self._num_angels):
+            community = self._instance['edge_weight'][-(self._num_angels+a),:-self._num_angels] \
+                <= self._radius[a]
+            angel_to_vertex_community[a] = community
+        # else:
+        #     angel_to_vertex_community = \
+        #         self._instance['edge_weight'][-self._num_angels:,:-self._num_angels] \
+        #             <= self._radius
 
         angel_to_angel_community = np.full(
             self._instance['edge_weight'][-self._num_angels:,-self._num_angels:].shape,
