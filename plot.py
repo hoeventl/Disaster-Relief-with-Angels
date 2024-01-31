@@ -36,10 +36,10 @@ def draw(network: Network, model: Model) -> None:
         else: # vertex
             color_map.append('red')
     nx.draw(G, 
-            pos=coords, 
+            pos=coords,
+            labels={i:i+1 for i in range(G.number_of_nodes())},
             node_color=color_map, 
-            node_size=100, 
-            with_labels=True)
+            node_size=100)
     
     # add radii around angels
     ax = plt.gca()

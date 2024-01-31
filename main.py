@@ -4,7 +4,7 @@ from experiment import *
 from model import *
 from plot import *
 
-network = simple()
+network = one_per_cluster()
 model = create_model_from_network(network)
 model.optimize()
 with open("output.txt", "w") as sys.stdout:
