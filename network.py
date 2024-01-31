@@ -133,6 +133,7 @@ class Network:
 
     def _update_edge_weights(self) -> None:
         self._instance['edge_weight'] = pairwise_euclidean(self._instance['node_coord'])
+        print(self._instance['edge_weight'])
 
     def _create_angel_communities(self) -> None:
         vertex_to_vertex_community = np.full(
@@ -141,7 +142,7 @@ class Network:
         angel_to_vertex_community = np.zeros_like(\
             self._instance['edge_weight'][-self._num_angels:,:-self._num_angels]) # bottom left of array
         for a in range(self._num_angels):
-            community = self._instance['edge_weight'][-(self._num_angels+a),:-self._num_angels] \
+            community = self._instance['edge_weight'][-self._num_angels+a,:-self._num_angels] \
                 <= self._radius[a]
             angel_to_vertex_community[a] = community
         angel_to_angel_community = np.full(

@@ -13,3 +13,5 @@ Looks like solutions are going from angel -> shadow node -> angel -> shadow node
 Struggling on dual side (Gurobi)
 
 Draw radii, (use an empty node and specify size [scaling is weird])
+
+renumber the node labels on plot to match instance file
