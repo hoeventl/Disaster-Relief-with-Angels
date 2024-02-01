@@ -134,7 +134,6 @@ class Network:
 
     def _update_edge_weights(self) -> None:
         self._instance['edge_weight'] = pairwise_euclidean(self._instance['node_coord'])
-        print(self._instance['edge_weight'])
 
     def _create_angel_communities(self) -> None:
         vertex_to_vertex_community = np.full(
