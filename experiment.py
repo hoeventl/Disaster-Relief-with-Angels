@@ -38,7 +38,7 @@ def simple() -> Network:
     Creates a simple example of vehicle routing with 3 angels in place.
     """
     #angel_locs=[11,8,5],
-    n = Network("Instances/X-n11-k25.vrp", num_angels=3, radius=[100,200,300], aid=5, activation_cost=1)
+    n = Network("Instances/X-n11-k25.vrp", num_angels=3,angel_locs=[11,8,5], radius=[100,200,300], aid=5, activation_cost=1)
     n.demand = [5 if d > 0 else 0 for d in n.demand]
     n.angel_demand = [8 if d > 0 else 0 for d in n.angel_demand]
     # n.angel_aid = [5 if a > 0 else 0 for a in n.angel_aid]
