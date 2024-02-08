@@ -30,7 +30,7 @@ def draw(network: Network, model: Model) -> None:
         if n in active_angels:
             color_map.append('blue')
         elif n in inactive_angels:
-            color_map.append('purple')
+            color_map.append('lightblue')
         elif n == 0: # depot
             color_map.append('black')
         else: # vertex
@@ -45,7 +45,7 @@ def draw(network: Network, model: Model) -> None:
     ax = plt.gca()
     count = 0
     for a in angels:
-        color = 'blue' if a in active_angels else 'purple'
+        color = 'blue' if a in active_angels else 'lightblue'
         c = plt.Circle(radii_coords[count], 
                        radius=network._radius[count], 
                        fill=False, 
