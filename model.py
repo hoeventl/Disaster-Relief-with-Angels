@@ -13,9 +13,9 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
     nodes = [*vertices, *angels] = nodes_with_depot[1:] = nodes_with_depot \ {0}
     vertices = [1,2,3,4,...,n-m-1,n-m]
     angels = [n-m+1,n-m+2,...,n+m]
-    edge_weights = [[x,x,x,x,x],[x,x,x,x]] ... (n+m by n+m)
-    activation_cost = [0,0,0,0,0,...,x,x,x,...] nonzero for all angels (n+m by n+m)
-    communities = [[],[],[],...,[1,2,3], [2,3]] only valid for angels (n+m by n+m)
+    edge_weights = [[x,x,x,x,x],[x,x,x,x]] ... (n+m+1 by n+m+1)
+    activation_cost = [0,0,0,0,0,...,x,x,x,...] nonzero for all angels (n+m by 1)
+    communities = [[],[],[],...,[1,2,3], [2,3]] only valid for angels (n+m by 1)
     """
     
     EPSILON = 1e-4 # needed to prevent "self" loops from vertex to angel below and back
@@ -33,7 +33,7 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
     for (i,j) in edges:
         cost += (edge_weights[i][j]+EPSILON)*x[(i,j)]
     for a in angels:
-        cost+= activation_cost[a]*z[a]
+        cost += activation_cost[a]*z[a]
     m.setObjective(cost, GRB.MINIMIZE)
 
     # flow balance
@@ -52,8 +52,7 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
                     f"Require_flow_in_{n}")
         
         # bounds on u variables
-        m.addConstr((u[n] >= demand[n]
-                     + angel_demand[n]*z[n]), 
+        m.addConstr((u[n] >= demand[n] + angel_demand[n]*z[n]), 
                     f"Uvar_lower_bound_{n}")
         m.addConstr((u[n] <= vehicle_capacity), f"Uvar_upper_bound_{n}")
         

@@ -10,7 +10,7 @@ class Network:
                  path: str, 
                  num_angels: int = None, 
                  radius: float | str | list = None, 
-                 aid: int | list = None,
+                 aid: int | str = None,
                  max_num_routes: int = None, 
                  angel_locs: list = None, 
                  angel_demand: int | list = None,
@@ -20,7 +20,7 @@ class Network:
         """
         self._instance = read_instance(path)
         self._rng = default_rng()
-        self._num_angels, self._radius = self.set_angel_parameters(num_angels, radius)
+        self._num_angels, self._radius = self._set_angel_parameters(num_angels, radius)
         self._add_angels_to_instance(angel_locs, angel_demand)
         if max_num_routes is None:
             self.max_num_routes = int(search("-k(.*).vrp", path).group(1)) # https://stackoverflow.com/a/3369000
@@ -55,7 +55,7 @@ class Network:
     #             return num_angels
     #     return False
 
-    def set_angel_parameters(self, num_angels: int | None, radius: float | str | list | None):
+    def _set_angel_parameters(self, num_angels: int | None, radius: float | str | list | None):
         if num_angels is None:
             num_angels = self._rng.integers(1,self._instance['node_coord'].shape[0]/3)
         elif num_angels == "max":
