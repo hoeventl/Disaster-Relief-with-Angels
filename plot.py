@@ -1,21 +1,42 @@
 import matplotlib.pyplot as plt
 import networkx as nx
+import pickle, json
 from gurobipy import Model
 from network import Network
 
 def draw(network: Network, model: Model) -> None:
     """
-    Draws the solution. Assumes model is a solved model.
+    Draws the solution.
     """
     active_edges = []
     active_angels = []
-    angels = network.nodes[-network._num_angels:]
+    
     for v in model.getVars():
         if v.X > 0.5:
             if v.Varname.startswith("x"):
                 active_edges.append(tuple(eval(v.Varname[1:])))
             if v.Varname.startswith("z"):
                 active_angels.append(eval(v.Varname[1:])[0])
+    
+    _draw(network, active_edges, active_angels)
+    
+def draw(network_path: str, sol_path: str) -> None:
+    network = pickle.load(open(network_path, "rb"))
+    sol = json.load(open(sol_path, "rb"))
+
+    active_edges = []
+    active_angels = []
+    for v in sol["Vars"]:
+        if v['X'] > 0.5:
+            if v['VarName'].startswith("x"):
+                active_edges.append(tuple(eval(v['VarName'][1:])))
+            if v['VarName'].startswith("z"):
+                active_angels.append(eval(v['VarName'][1:])[0])
+                
+    _draw(network, active_edges, active_angels)
+
+def _draw(network: Network, active_edges: list[tuple], active_angels: list) -> None:
+    angels = network.nodes[-network._num_angels:]
     inactive_angels = [a for a in angels if a not in active_angels]
 
     coords = network.get_coordinates()
@@ -56,6 +77,5 @@ def draw(network: Network, model: Model) -> None:
     plt.axis('equal')
 
     plt.show()
-    
 
         
