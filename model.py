@@ -19,7 +19,10 @@ def create_model(nodes_with_depot: list[int], nodes: list[int], vertices: list[i
     """
     
     EPSILON = 1e-4 # needed to prevent "self" loops from vertex to angel below and back
-    edges = [e for e in [(i,j) for i in nodes_with_depot for j in nodes_with_depot] if e[0] != e[1]]
+    edges = [e for e in [(i,j) \
+                         for i in nodes_with_depot \
+                            for j in nodes_with_depot if edge_weights[i][j] > 0] \
+                    if e[0] != e[1]]
     m = gp.Model()
     x = m.addVars(edges, vtype=GRB.BINARY, name="x")
     z = m.addVars(nodes, vtype=GRB.BINARY, name="z")
