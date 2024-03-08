@@ -320,31 +320,31 @@ COLUMNS
     x[0,5]    MTZ_0->5  -50
     x[0,5]    Uvardiff_0->5  -50
     x[0,5]    Routes_leaving_depot_max  1
-    x[0,6]    OBJ       3.1622786601683794e+02
+    x[0,6]    OBJ       3.1784440150625636e+02
     x[0,6]    Flow_Balance_6  1
     x[0,6]    Require_flow_in_6  1
     x[0,6]    MTZ_0->6  -50
     x[0,6]    Uvardiff_0->6  -50
     x[0,6]    Routes_leaving_depot_max  1
-    x[0,7]    OBJ       3.0413822651491097e+02
+    x[0,7]    OBJ       305.0001
     x[0,7]    Flow_Balance_7  1
     x[0,7]    Require_flow_in_7  1
     x[0,7]    MTZ_0->7  -50
     x[0,7]    Uvardiff_0->7  -50
     x[0,7]    Routes_leaving_depot_max  1
-    x[0,8]    OBJ       300.0001
+    x[0,8]    OBJ       3.0004176377354992e+02
     x[0,8]    Flow_Balance_8  1
     x[0,8]    Require_flow_in_8  1
     x[0,8]    MTZ_0->8  -50
     x[0,8]    Uvardiff_0->8  -50
     x[0,8]    Routes_leaving_depot_max  1
-    x[0,9]    OBJ       3.0413822651491097e+02
+    x[0,9]    OBJ       3.0335632624235024e+02
     x[0,9]    Flow_Balance_9  1
     x[0,9]    Require_flow_in_9  1
     x[0,9]    MTZ_0->9  -50
     x[0,9]    Uvardiff_0->9  -50
     x[0,9]    Routes_leaving_depot_max  1
-    x[0,10]   OBJ       3.1622786601683794e+02
+    x[0,10]   OBJ       3.1468247955119125e+02
     x[0,10]   Flow_Balance_10  1
     x[0,10]   Require_flow_in_10  1
     x[0,10]   MTZ_0->10  -50
@@ -382,31 +382,31 @@ COLUMNS
     x[1,5]    Require_flow_in_5  1
     x[1,5]    MTZ_1->5  -50
     x[1,5]    Uvardiff_1->5  -50
-    x[1,6]    OBJ       100.0001
+    x[1,6]    OBJ       1.0012502197250393e+02
     x[1,6]    Flow_Balance_1  -1
     x[1,6]    Flow_Balance_6  1
     x[1,6]    Require_flow_in_6  1
     x[1,6]    MTZ_1->6  -50
     x[1,6]    Uvardiff_1->6  -50
-    x[1,7]    OBJ       1.1180349887498949e+02
+    x[1,7]    OBJ       1.0965866099730654e+02
     x[1,7]    Flow_Balance_1  -1
     x[1,7]    Flow_Balance_7  1
     x[1,7]    Require_flow_in_7  1
     x[1,7]    MTZ_1->7  -50
     x[1,7]    Uvardiff_1->7  -50
-    x[1,8]    OBJ       1.4142145623730951e+02
+    x[1,8]    OBJ       1.3793124224133723e+02
     x[1,8]    Flow_Balance_1  -1
     x[1,8]    Flow_Balance_8  1
     x[1,8]    Require_flow_in_8  1
     x[1,8]    MTZ_1->8  -50
     x[1,8]    Uvardiff_1->8  -50
-    x[1,9]    OBJ       1.8027766377319946e+02
+    x[1,9]    OBJ       1.7613924953808538e+02
     x[1,9]    Flow_Balance_1  -1
     x[1,9]    Flow_Balance_9  1
     x[1,9]    Require_flow_in_9  1
     x[1,9]    MTZ_1->9  -50
     x[1,9]    Uvardiff_1->9  -50
-    x[1,10]   OBJ       2.2360689774997897e+02
+    x[1,10]   OBJ       2.1914617000811126e+02
     x[1,10]   Flow_Balance_1  -1
     x[1,10]   Flow_Balance_10  1
     x[1,10]   Require_flow_in_10  1
@@ -444,31 +444,31 @@ COLUMNS
     x[2,5]    Require_flow_in_5  1
     x[2,5]    MTZ_2->5  -50
     x[2,5]    Uvardiff_2->5  -50
-    x[2,6]    OBJ       1.1180349887498949e+02
+    x[2,6]    OBJ       1.1412722210513327e+02
     x[2,6]    Flow_Balance_2  -1
     x[2,6]    Flow_Balance_6  1
     x[2,6]    Require_flow_in_6  1
     x[2,6]    MTZ_2->6  -50
     x[2,6]    Uvardiff_2->6  -50
-    x[2,7]    OBJ       100.0001
+    x[2,7]    OBJ       1.0012502197250393e+02
     x[2,7]    Flow_Balance_2  -1
     x[2,7]    Flow_Balance_7  1
     x[2,7]    Require_flow_in_7  1
     x[2,7]    MTZ_2->7  -50
     x[2,7]    Uvardiff_2->7  -50
-    x[2,8]    OBJ       1.1180349887498949e+02
+    x[2,8]    OBJ       1.0965866099730654e+02
     x[2,8]    Flow_Balance_2  -1
     x[2,8]    Flow_Balance_8  1
     x[2,8]    Require_flow_in_8  1
     x[2,8]    MTZ_2->8  -50
     x[2,8]    Uvardiff_2->8  -50
-    x[2,9]    OBJ       1.4142145623730951e+02
+    x[2,9]    OBJ       1.3793124224133723e+02
     x[2,9]    Flow_Balance_2  -1
     x[2,9]    Flow_Balance_9  1
     x[2,9]    Require_flow_in_9  1
     x[2,9]    MTZ_2->9  -50
     x[2,9]    Uvardiff_2->9  -50
-    x[2,10]   OBJ       1.8027766377319946e+02
+    x[2,10]   OBJ       1.7613924953808538e+02
     x[2,10]   Flow_Balance_2  -1
     x[2,10]   Flow_Balance_10  1
     x[2,10]   Require_flow_in_10  1
@@ -506,31 +506,31 @@ COLUMNS
     x[3,5]    Require_flow_in_5  1
     x[3,5]    MTZ_3->5  -50
     x[3,5]    Uvardiff_3->5  -50
-    x[3,6]    OBJ       1.4142145623730951e+02
+    x[3,6]    OBJ       145.0001
     x[3,6]    Flow_Balance_3  -1
     x[3,6]    Flow_Balance_6  1
     x[3,6]    Require_flow_in_6  1
     x[3,6]    MTZ_3->6  -50
     x[3,6]    Uvardiff_3->6  -50
-    x[3,7]    OBJ       1.1180349887498949e+02
+    x[3,7]    OBJ       1.1412722210513327e+02
     x[3,7]    Flow_Balance_3  -1
     x[3,7]    Flow_Balance_7  1
     x[3,7]    Require_flow_in_7  1
     x[3,7]    MTZ_3->7  -50
     x[3,7]    Uvardiff_3->7  -50
-    x[3,8]    OBJ       100.0001
+    x[3,8]    OBJ       1.0012502197250393e+02
     x[3,8]    Flow_Balance_3  -1
     x[3,8]    Flow_Balance_8  1
     x[3,8]    Require_flow_in_8  1
     x[3,8]    MTZ_3->8  -50
     x[3,8]    Uvardiff_3->8  -50
-    x[3,9]    OBJ       1.1180349887498949e+02
+    x[3,9]    OBJ       1.0965866099730654e+02
     x[3,9]    Flow_Balance_3  -1
     x[3,9]    Flow_Balance_9  1
     x[3,9]    Require_flow_in_9  1
     x[3,9]    MTZ_3->9  -50
     x[3,9]    Uvardiff_3->9  -50
-    x[3,10]   OBJ       1.4142145623730951e+02
+    x[3,10]   OBJ       1.3793124224133723e+02
     x[3,10]   Flow_Balance_3  -1
     x[3,10]   Flow_Balance_10  1
     x[3,10]   Require_flow_in_10  1
@@ -568,31 +568,31 @@ COLUMNS
     x[4,5]    Require_flow_in_5  1
     x[4,5]    MTZ_4->5  -50
     x[4,5]    Uvardiff_4->5  -50
-    x[4,6]    OBJ       1.8027766377319946e+02
+    x[4,6]    OBJ       1.8445876745696717e+02
     x[4,6]    Flow_Balance_4  -1
     x[4,6]    Flow_Balance_6  1
     x[4,6]    Require_flow_in_6  1
     x[4,6]    MTZ_4->6  -50
     x[4,6]    Uvardiff_4->6  -50
-    x[4,7]    OBJ       1.4142145623730951e+02
+    x[4,7]    OBJ       145.0001
     x[4,7]    Flow_Balance_4  -1
     x[4,7]    Flow_Balance_7  1
     x[4,7]    Require_flow_in_7  1
     x[4,7]    MTZ_4->7  -50
     x[4,7]    Uvardiff_4->7  -50
-    x[4,8]    OBJ       1.1180349887498949e+02
+    x[4,8]    OBJ       1.1412722210513327e+02
     x[4,8]    Flow_Balance_4  -1
     x[4,8]    Flow_Balance_8  1
     x[4,8]    Require_flow_in_8  1
     x[4,8]    MTZ_4->8  -50
     x[4,8]    Uvardiff_4->8  -50
-    x[4,9]    OBJ       100.0001
+    x[4,9]    OBJ       1.0012502197250393e+02
     x[4,9]    Flow_Balance_4  -1
     x[4,9]    Flow_Balance_9  1
     x[4,9]    Require_flow_in_9  1
     x[4,9]    MTZ_4->9  -50
     x[4,9]    Uvardiff_4->9  -50
-    x[4,10]   OBJ       1.1180349887498949e+02
+    x[4,10]   OBJ       1.0965866099730654e+02
     x[4,10]   Flow_Balance_4  -1
     x[4,10]   Flow_Balance_10  1
     x[4,10]   Require_flow_in_10  1
@@ -630,31 +630,31 @@ COLUMNS
     x[5,4]    Flow_Balance_5  -1
     x[5,4]    MTZ_5->4  -50
     x[5,4]    Uvardiff_5->4  -50
-    x[5,6]    OBJ       2.2360689774997897e+02
+    x[5,6]    OBJ       2.2808999455914088e+02
     x[5,6]    Flow_Balance_5  -1
     x[5,6]    Flow_Balance_6  1
     x[5,6]    Require_flow_in_6  1
     x[5,6]    MTZ_5->6  -50
     x[5,6]    Uvardiff_5->6  -50
-    x[5,7]    OBJ       1.8027766377319946e+02
+    x[5,7]    OBJ       1.8445876745696717e+02
     x[5,7]    Flow_Balance_5  -1
     x[5,7]    Flow_Balance_7  1
     x[5,7]    Require_flow_in_7  1
     x[5,7]    MTZ_5->7  -50
     x[5,7]    Uvardiff_5->7  -50
-    x[5,8]    OBJ       1.4142145623730951e+02
+    x[5,8]    OBJ       145.0001
     x[5,8]    Flow_Balance_5  -1
     x[5,8]    Flow_Balance_8  1
     x[5,8]    Require_flow_in_8  1
     x[5,8]    MTZ_5->8  -50
     x[5,8]    Uvardiff_5->8  -50
-    x[5,9]    OBJ       1.1180349887498949e+02
+    x[5,9]    OBJ       1.1412722210513327e+02
     x[5,9]    Flow_Balance_5  -1
     x[5,9]    Flow_Balance_9  1
     x[5,9]    Require_flow_in_9  1
     x[5,9]    MTZ_5->9  -50
     x[5,9]    Uvardiff_5->9  -50
-    x[5,10]   OBJ       100.0001
+    x[5,10]   OBJ       1.0012502197250393e+02
     x[5,10]   Flow_Balance_5  -1
     x[5,10]   Flow_Balance_10  1
     x[5,10]   Require_flow_in_10  1
@@ -666,33 +666,33 @@ COLUMNS
     x[5,11]   Require_flow_in_11  1
     x[5,11]   MTZ_5->11  -50
     x[5,11]   Uvardiff_5->11  -50
-    x[6,0]    OBJ       3.1622786601683794e+02
+    x[6,0]    OBJ       3.1784440150625636e+02
     x[6,0]    Flow_Balance_6  -1
-    x[6,1]    OBJ       100.0001
+    x[6,1]    OBJ       1.0012502197250393e+02
     x[6,1]    Flow_Balance_1  1
     x[6,1]    Require_flow_in_1  1
     x[6,1]    Flow_Balance_6  -1
     x[6,1]    MTZ_6->1  -50
     x[6,1]    Uvardiff_6->1  -50
-    x[6,2]    OBJ       1.1180349887498949e+02
+    x[6,2]    OBJ       1.1412722210513327e+02
     x[6,2]    Flow_Balance_2  1
     x[6,2]    Require_flow_in_2  1
     x[6,2]    Flow_Balance_6  -1
     x[6,2]    MTZ_6->2  -50
     x[6,2]    Uvardiff_6->2  -50
-    x[6,3]    OBJ       1.4142145623730951e+02
+    x[6,3]    OBJ       145.0001
     x[6,3]    Flow_Balance_3  1
     x[6,3]    Require_flow_in_3  1
     x[6,3]    Flow_Balance_6  -1
     x[6,3]    MTZ_6->3  -50
     x[6,3]    Uvardiff_6->3  -50
-    x[6,4]    OBJ       1.8027766377319946e+02
+    x[6,4]    OBJ       1.8445876745696717e+02
     x[6,4]    Flow_Balance_4  1
     x[6,4]    Require_flow_in_4  1
     x[6,4]    Flow_Balance_6  -1
     x[6,4]    MTZ_6->4  -50
     x[6,4]    Uvardiff_6->4  -50
-    x[6,5]    OBJ       2.2360689774997897e+02
+    x[6,5]    OBJ       2.2808999455914088e+02
     x[6,5]    Flow_Balance_5  1
     x[6,5]    Require_flow_in_5  1
     x[6,5]    Flow_Balance_6  -1
@@ -722,39 +722,39 @@ COLUMNS
     x[6,10]   Require_flow_in_10  1
     x[6,10]   MTZ_6->10  -50
     x[6,10]   Uvardiff_6->10  -50
-    x[6,11]   OBJ       1.1180349887498949e+02
+    x[6,11]   OBJ       1.1629713349613007e+02
     x[6,11]   Flow_Balance_6  -1
     x[6,11]   Flow_Balance_11  1
     x[6,11]   Require_flow_in_11  1
     x[6,11]   MTZ_6->11  -50
     x[6,11]   Uvardiff_6->11  -50
-    x[7,0]    OBJ       3.0413822651491097e+02
+    x[7,0]    OBJ       305.0001
     x[7,0]    Flow_Balance_7  -1
-    x[7,1]    OBJ       1.1180349887498949e+02
+    x[7,1]    OBJ       1.0965866099730654e+02
     x[7,1]    Flow_Balance_1  1
     x[7,1]    Require_flow_in_1  1
     x[7,1]    Flow_Balance_7  -1
     x[7,1]    MTZ_7->1  -50
     x[7,1]    Uvardiff_7->1  -50
-    x[7,2]    OBJ       100.0001
+    x[7,2]    OBJ       1.0012502197250393e+02
     x[7,2]    Flow_Balance_2  1
     x[7,2]    Require_flow_in_2  1
     x[7,2]    Flow_Balance_7  -1
     x[7,2]    MTZ_7->2  -50
     x[7,2]    Uvardiff_7->2  -50
-    x[7,3]    OBJ       1.1180349887498949e+02
+    x[7,3]    OBJ       1.1412722210513327e+02
     x[7,3]    Flow_Balance_3  1
     x[7,3]    Require_flow_in_3  1
     x[7,3]    Flow_Balance_7  -1
     x[7,3]    MTZ_7->3  -50
     x[7,3]    Uvardiff_7->3  -50
-    x[7,4]    OBJ       1.4142145623730951e+02
+    x[7,4]    OBJ       145.0001
     x[7,4]    Flow_Balance_4  1
     x[7,4]    Require_flow_in_4  1
     x[7,4]    Flow_Balance_7  -1
     x[7,4]    MTZ_7->4  -50
     x[7,4]    Uvardiff_7->4  -50
-    x[7,5]    OBJ       1.8027766377319946e+02
+    x[7,5]    OBJ       1.8445876745696717e+02
     x[7,5]    Flow_Balance_5  1
     x[7,5]    Require_flow_in_5  1
     x[7,5]    Flow_Balance_7  -1
@@ -784,39 +784,39 @@ COLUMNS
     x[7,10]   Require_flow_in_10  1
     x[7,10]   MTZ_7->10  -50
     x[7,10]   Uvardiff_7->10  -50
-    x[7,11]   OBJ       7.0710778118654758e+01
+    x[7,11]   OBJ       7.4330443736592528e+01
     x[7,11]   Flow_Balance_7  -1
     x[7,11]   Flow_Balance_11  1
     x[7,11]   Require_flow_in_11  1
     x[7,11]   MTZ_7->11  -50
     x[7,11]   Uvardiff_7->11  -50
-    x[8,0]    OBJ       300.0001
+    x[8,0]    OBJ       3.0004176377354992e+02
     x[8,0]    Flow_Balance_8  -1
-    x[8,1]    OBJ       1.4142145623730951e+02
+    x[8,1]    OBJ       1.3793124224133723e+02
     x[8,1]    Flow_Balance_1  1
     x[8,1]    Require_flow_in_1  1
     x[8,1]    Flow_Balance_8  -1
     x[8,1]    MTZ_8->1  -50
     x[8,1]    Uvardiff_8->1  -50
-    x[8,2]    OBJ       1.1180349887498949e+02
+    x[8,2]    OBJ       1.0965866099730654e+02
     x[8,2]    Flow_Balance_2  1
     x[8,2]    Require_flow_in_2  1
     x[8,2]    Flow_Balance_8  -1
     x[8,2]    MTZ_8->2  -50
     x[8,2]    Uvardiff_8->2  -50
-    x[8,3]    OBJ       100.0001
+    x[8,3]    OBJ       1.0012502197250393e+02
     x[8,3]    Flow_Balance_3  1
     x[8,3]    Require_flow_in_3  1
     x[8,3]    Flow_Balance_8  -1
     x[8,3]    MTZ_8->3  -50
     x[8,3]    Uvardiff_8->3  -50
-    x[8,4]    OBJ       1.1180349887498949e+02
+    x[8,4]    OBJ       1.1412722210513327e+02
     x[8,4]    Flow_Balance_4  1
     x[8,4]    Require_flow_in_4  1
     x[8,4]    Flow_Balance_8  -1
     x[8,4]    MTZ_8->4  -50
     x[8,4]    Uvardiff_8->4  -50
-    x[8,5]    OBJ       1.4142145623730951e+02
+    x[8,5]    OBJ       145.0001
     x[8,5]    Flow_Balance_5  1
     x[8,5]    Require_flow_in_5  1
     x[8,5]    Flow_Balance_8  -1
@@ -846,39 +846,39 @@ COLUMNS
     x[8,10]   Require_flow_in_10  1
     x[8,10]   MTZ_8->10  -50
     x[8,10]   Uvardiff_8->10  -50
-    x[8,11]   OBJ       50.0001
+    x[8,11]   OBJ       5.0249478105604453e+01
     x[8,11]   Flow_Balance_8  -1
     x[8,11]   Flow_Balance_11  1
     x[8,11]   Require_flow_in_11  1
     x[8,11]   MTZ_8->11  -50
     x[8,11]   Uvardiff_8->11  -50
-    x[9,0]    OBJ       3.0413822651491097e+02
+    x[9,0]    OBJ       3.0335632624235024e+02
     x[9,0]    Flow_Balance_9  -1
-    x[9,1]    OBJ       1.8027766377319946e+02
+    x[9,1]    OBJ       1.7613924953808538e+02
     x[9,1]    Flow_Balance_1  1
     x[9,1]    Require_flow_in_1  1
     x[9,1]    Flow_Balance_9  -1
     x[9,1]    MTZ_9->1  -50
     x[9,1]    Uvardiff_9->1  -50
-    x[9,2]    OBJ       1.4142145623730951e+02
+    x[9,2]    OBJ       1.3793124224133723e+02
     x[9,2]    Flow_Balance_2  1
     x[9,2]    Require_flow_in_2  1
     x[9,2]    Flow_Balance_9  -1
     x[9,2]    MTZ_9->2  -50
     x[9,2]    Uvardiff_9->2  -50
-    x[9,3]    OBJ       1.1180349887498949e+02
+    x[9,3]    OBJ       1.0965866099730654e+02
     x[9,3]    Flow_Balance_3  1
     x[9,3]    Require_flow_in_3  1
     x[9,3]    Flow_Balance_9  -1
     x[9,3]    MTZ_9->3  -50
     x[9,3]    Uvardiff_9->3  -50
-    x[9,4]    OBJ       100.0001
+    x[9,4]    OBJ       1.0012502197250393e+02
     x[9,4]    Flow_Balance_4  1
     x[9,4]    Require_flow_in_4  1
     x[9,4]    Flow_Balance_9  -1
     x[9,4]    MTZ_9->4  -50
     x[9,4]    Uvardiff_9->4  -50
-    x[9,5]    OBJ       1.1180349887498949e+02
+    x[9,5]    OBJ       1.1412722210513327e+02
     x[9,5]    Flow_Balance_5  1
     x[9,5]    Require_flow_in_5  1
     x[9,5]    Flow_Balance_9  -1
@@ -908,39 +908,39 @@ COLUMNS
     x[9,10]   Require_flow_in_10  1
     x[9,10]   MTZ_9->10  -50
     x[9,10]   Uvardiff_9->10  -50
-    x[9,11]   OBJ       7.0710778118654758e+01
+    x[9,11]   OBJ       6.7268220235368560e+01
     x[9,11]   Flow_Balance_9  -1
     x[9,11]   Flow_Balance_11  1
     x[9,11]   Require_flow_in_11  1
     x[9,11]   MTZ_9->11  -50
     x[9,11]   Uvardiff_9->11  -50
-    x[10,0]   OBJ       3.1622786601683794e+02
+    x[10,0]   OBJ       3.1468247955119125e+02
     x[10,0]   Flow_Balance_10  -1
-    x[10,1]   OBJ       2.2360689774997897e+02
+    x[10,1]   OBJ       2.1914617000811126e+02
     x[10,1]   Flow_Balance_1  1
     x[10,1]   Require_flow_in_1  1
     x[10,1]   Flow_Balance_10  -1
     x[10,1]   MTZ_10->1  -50
     x[10,1]   Uvardiff_10->1  -50
-    x[10,2]   OBJ       1.8027766377319946e+02
+    x[10,2]   OBJ       1.7613924953808538e+02
     x[10,2]   Flow_Balance_2  1
     x[10,2]   Require_flow_in_2  1
     x[10,2]   Flow_Balance_10  -1
     x[10,2]   MTZ_10->2  -50
     x[10,2]   Uvardiff_10->2  -50
-    x[10,3]   OBJ       1.4142145623730951e+02
+    x[10,3]   OBJ       1.3793124224133723e+02
     x[10,3]   Flow_Balance_3  1
     x[10,3]   Require_flow_in_3  1
     x[10,3]   Flow_Balance_10  -1
     x[10,3]   MTZ_10->3  -50
     x[10,3]   Uvardiff_10->3  -50
-    x[10,4]   OBJ       1.1180349887498949e+02
+    x[10,4]   OBJ       1.0965866099730654e+02
     x[10,4]   Flow_Balance_4  1
     x[10,4]   Require_flow_in_4  1
     x[10,4]   Flow_Balance_10  -1
     x[10,4]   MTZ_10->4  -50
     x[10,4]   Uvardiff_10->4  -50
-    x[10,5]   OBJ       100.0001
+    x[10,5]   OBJ       1.0012502197250393e+02
     x[10,5]   Flow_Balance_5  1
     x[10,5]   Require_flow_in_5  1
     x[10,5]   Flow_Balance_10  -1
@@ -970,7 +970,7 @@ COLUMNS
     x[10,9]   Flow_Balance_10  -1
     x[10,9]   MTZ_10->9  -50
     x[10,9]   Uvardiff_10->9  -50
-    x[10,11]  OBJ       1.1180349887498949e+02
+    x[10,11]  OBJ       1.0735465276791945e+02
     x[10,11]  Flow_Balance_10  -1
     x[10,11]  Flow_Balance_11  1
     x[10,11]  Require_flow_in_11  1
@@ -1008,31 +1008,31 @@ COLUMNS
     x[11,5]   Flow_Balance_11  -1
     x[11,5]   MTZ_11->5  -50
     x[11,5]   Uvardiff_11->5  -50
-    x[11,6]   OBJ       1.1180349887498949e+02
+    x[11,6]   OBJ       1.1629713349613007e+02
     x[11,6]   Flow_Balance_6  1
     x[11,6]   Require_flow_in_6  1
     x[11,6]   Flow_Balance_11  -1
     x[11,6]   MTZ_11->6  -50
     x[11,6]   Uvardiff_11->6  -50
-    x[11,7]   OBJ       7.0710778118654758e+01
+    x[11,7]   OBJ       7.4330443736592528e+01
     x[11,7]   Flow_Balance_7  1
     x[11,7]   Require_flow_in_7  1
     x[11,7]   Flow_Balance_11  -1
     x[11,7]   MTZ_11->7  -50
     x[11,7]   Uvardiff_11->7  -50
-    x[11,8]   OBJ       50.0001
+    x[11,8]   OBJ       5.0249478105604453e+01
     x[11,8]   Flow_Balance_8  1
     x[11,8]   Require_flow_in_8  1
     x[11,8]   Flow_Balance_11  -1
     x[11,8]   MTZ_11->8  -50
     x[11,8]   Uvardiff_11->8  -50
-    x[11,9]   OBJ       7.0710778118654758e+01
+    x[11,9]   OBJ       6.7268220235368560e+01
     x[11,9]   Flow_Balance_9  1
     x[11,9]   Require_flow_in_9  1
     x[11,9]   Flow_Balance_11  -1
     x[11,9]   MTZ_11->9  -50
     x[11,9]   Uvardiff_11->9  -50
-    x[11,10]  OBJ       1.1180349887498949e+02
+    x[11,10]  OBJ       1.0735465276791945e+02
     x[11,10]  Flow_Balance_10  1
     x[11,10]  Require_flow_in_10  1
     x[11,10]  Flow_Balance_11  -1
@@ -1048,20 +1048,20 @@ COLUMNS
     z[8]      OBJ       0
     z[9]      OBJ       0
     z[10]     OBJ       0
-    z[11]     OBJ       50
+    z[11]     OBJ       20
     z[11]     Require_flow_in_11  -1
-    z[11]     Uvar_lower_bound_11  -5
-    z[11]     MTZ_0->11  -5
-    z[11]     MTZ_1->11  -5
-    z[11]     MTZ_2->11  -5
-    z[11]     MTZ_3->11  -5
-    z[11]     MTZ_4->11  -5
-    z[11]     MTZ_5->11  -5
-    z[11]     MTZ_6->11  -5
-    z[11]     MTZ_7->11  -5
-    z[11]     MTZ_8->11  -5
-    z[11]     MTZ_9->11  -5
-    z[11]     MTZ_10->11  -5
+    z[11]     Uvar_lower_bound_11  -20
+    z[11]     MTZ_0->11  -20
+    z[11]     MTZ_1->11  -20
+    z[11]     MTZ_2->11  -20
+    z[11]     MTZ_3->11  -20
+    z[11]     MTZ_4->11  -20
+    z[11]     MTZ_5->11  -20
+    z[11]     MTZ_6->11  -20
+    z[11]     MTZ_7->11  -20
+    z[11]     MTZ_8->11  -20
+    z[11]     MTZ_9->11  -20
+    z[11]     MTZ_10->11  -20
     MARKER    'MARKER'                 'INTEND'
     u[0]      MTZ_0->1  -1
     u[0]      Uvardiff_0->1  -1

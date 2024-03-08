@@ -6,8 +6,8 @@ INSTANCE = "./Instances/TH-n11-k2.vrp"
 OUTPUT_FOLDER = "./output/"
 SUBFOLDER = "radius/"
 
-for r in range(0,150,25):
-    network = Network(INSTANCE,num_angels=1,radius=r,angel_locs=[(250,250)],aid="max",angel_demand=5,activation_cost=50)
+for r in range(45,150,10):
+    network = Network(INSTANCE,num_angels=1,radius=r,angel_locs=[(250,250)],aid="max",angel_demand=20,activation_cost=20)
     model = create_model_from_network(network)
     model.optimize()
 
