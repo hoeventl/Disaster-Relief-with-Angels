@@ -1051,41 +1051,53 @@ COLUMNS
     z[11]     OBJ       20
     z[11]     Require_flow_in_3  1
     z[11]     Require_flow_in_8  1
+    z[11]     Require_flow_in_9  1
     z[11]     Require_flow_in_11  -1
     z[11]     Uvar_lower_bound_11  -20
     z[11]     MTZ_0->3  5
     z[11]     MTZ_0->8  5
+    z[11]     MTZ_0->9  5
     z[11]     MTZ_0->11  -20
     z[11]     MTZ_1->3  5
     z[11]     MTZ_1->8  5
+    z[11]     MTZ_1->9  5
     z[11]     MTZ_1->11  -20
     z[11]     MTZ_2->3  5
     z[11]     MTZ_2->8  5
+    z[11]     MTZ_2->9  5
     z[11]     MTZ_2->11  -20
     z[11]     MTZ_3->8  5
+    z[11]     MTZ_3->9  5
     z[11]     MTZ_3->11  -20
     z[11]     MTZ_4->3  5
     z[11]     MTZ_4->8  5
+    z[11]     MTZ_4->9  5
     z[11]     MTZ_4->11  -20
     z[11]     MTZ_5->3  5
     z[11]     MTZ_5->8  5
+    z[11]     MTZ_5->9  5
     z[11]     MTZ_5->11  -20
     z[11]     MTZ_6->3  5
     z[11]     MTZ_6->8  5
+    z[11]     MTZ_6->9  5
     z[11]     MTZ_6->11  -20
     z[11]     MTZ_7->3  5
     z[11]     MTZ_7->8  5
+    z[11]     MTZ_7->9  5
     z[11]     MTZ_7->11  -20
     z[11]     MTZ_8->3  5
+    z[11]     MTZ_8->9  5
     z[11]     MTZ_8->11  -20
     z[11]     MTZ_9->3  5
     z[11]     MTZ_9->8  5
     z[11]     MTZ_9->11  -20
     z[11]     MTZ_10->3  5
     z[11]     MTZ_10->8  5
+    z[11]     MTZ_10->9  5
     z[11]     MTZ_10->11  -20
     z[11]     MTZ_11->3  5
     z[11]     MTZ_11->8  5
+    z[11]     MTZ_11->9  5
     MARKER    'MARKER'                 'INTEND'
     u[0]      MTZ_0->1  -1
     u[0]      Uvardiff_0->1  -1

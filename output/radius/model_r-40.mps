@@ -1049,127 +1049,19 @@ COLUMNS
     z[9]      OBJ       0
     z[10]     OBJ       0
     z[11]     OBJ       20
-    z[11]     Require_flow_in_1  1
-    z[11]     Require_flow_in_2  1
-    z[11]     Require_flow_in_3  1
-    z[11]     Require_flow_in_4  1
-    z[11]     Require_flow_in_5  1
-    z[11]     Require_flow_in_7  1
-    z[11]     Require_flow_in_8  1
-    z[11]     Require_flow_in_9  1
-    z[11]     Require_flow_in_10  1
     z[11]     Require_flow_in_11  -1
     z[11]     Uvar_lower_bound_11  -20
-    z[11]     MTZ_0->1  5
-    z[11]     MTZ_0->2  5
-    z[11]     MTZ_0->3  5
-    z[11]     MTZ_0->4  5
-    z[11]     MTZ_0->5  5
-    z[11]     MTZ_0->7  5
-    z[11]     MTZ_0->8  5
-    z[11]     MTZ_0->9  5
-    z[11]     MTZ_0->10  5
     z[11]     MTZ_0->11  -20
-    z[11]     MTZ_1->2  5
-    z[11]     MTZ_1->3  5
-    z[11]     MTZ_1->4  5
-    z[11]     MTZ_1->5  5
-    z[11]     MTZ_1->7  5
-    z[11]     MTZ_1->8  5
-    z[11]     MTZ_1->9  5
-    z[11]     MTZ_1->10  5
     z[11]     MTZ_1->11  -20
-    z[11]     MTZ_2->1  5
-    z[11]     MTZ_2->3  5
-    z[11]     MTZ_2->4  5
-    z[11]     MTZ_2->5  5
-    z[11]     MTZ_2->7  5
-    z[11]     MTZ_2->8  5
-    z[11]     MTZ_2->9  5
-    z[11]     MTZ_2->10  5
     z[11]     MTZ_2->11  -20
-    z[11]     MTZ_3->1  5
-    z[11]     MTZ_3->2  5
-    z[11]     MTZ_3->4  5
-    z[11]     MTZ_3->5  5
-    z[11]     MTZ_3->7  5
-    z[11]     MTZ_3->8  5
-    z[11]     MTZ_3->9  5
-    z[11]     MTZ_3->10  5
     z[11]     MTZ_3->11  -20
-    z[11]     MTZ_4->1  5
-    z[11]     MTZ_4->2  5
-    z[11]     MTZ_4->3  5
-    z[11]     MTZ_4->5  5
-    z[11]     MTZ_4->7  5
-    z[11]     MTZ_4->8  5
-    z[11]     MTZ_4->9  5
-    z[11]     MTZ_4->10  5
     z[11]     MTZ_4->11  -20
-    z[11]     MTZ_5->1  5
-    z[11]     MTZ_5->2  5
-    z[11]     MTZ_5->3  5
-    z[11]     MTZ_5->4  5
-    z[11]     MTZ_5->7  5
-    z[11]     MTZ_5->8  5
-    z[11]     MTZ_5->9  5
-    z[11]     MTZ_5->10  5
     z[11]     MTZ_5->11  -20
-    z[11]     MTZ_6->1  5
-    z[11]     MTZ_6->2  5
-    z[11]     MTZ_6->3  5
-    z[11]     MTZ_6->4  5
-    z[11]     MTZ_6->5  5
-    z[11]     MTZ_6->7  5
-    z[11]     MTZ_6->8  5
-    z[11]     MTZ_6->9  5
-    z[11]     MTZ_6->10  5
     z[11]     MTZ_6->11  -20
-    z[11]     MTZ_7->1  5
-    z[11]     MTZ_7->2  5
-    z[11]     MTZ_7->3  5
-    z[11]     MTZ_7->4  5
-    z[11]     MTZ_7->5  5
-    z[11]     MTZ_7->8  5
-    z[11]     MTZ_7->9  5
-    z[11]     MTZ_7->10  5
     z[11]     MTZ_7->11  -20
-    z[11]     MTZ_8->1  5
-    z[11]     MTZ_8->2  5
-    z[11]     MTZ_8->3  5
-    z[11]     MTZ_8->4  5
-    z[11]     MTZ_8->5  5
-    z[11]     MTZ_8->7  5
-    z[11]     MTZ_8->9  5
-    z[11]     MTZ_8->10  5
     z[11]     MTZ_8->11  -20
-    z[11]     MTZ_9->1  5
-    z[11]     MTZ_9->2  5
-    z[11]     MTZ_9->3  5
-    z[11]     MTZ_9->4  5
-    z[11]     MTZ_9->5  5
-    z[11]     MTZ_9->7  5
-    z[11]     MTZ_9->8  5
-    z[11]     MTZ_9->10  5
     z[11]     MTZ_9->11  -20
-    z[11]     MTZ_10->1  5
-    z[11]     MTZ_10->2  5
-    z[11]     MTZ_10->3  5
-    z[11]     MTZ_10->4  5
-    z[11]     MTZ_10->5  5
-    z[11]     MTZ_10->7  5
-    z[11]     MTZ_10->8  5
-    z[11]     MTZ_10->9  5
     z[11]     MTZ_10->11  -20
-    z[11]     MTZ_11->1  5
-    z[11]     MTZ_11->2  5
-    z[11]     MTZ_11->3  5
-    z[11]     MTZ_11->4  5
-    z[11]     MTZ_11->5  5
-    z[11]     MTZ_11->7  5
-    z[11]     MTZ_11->8  5
-    z[11]     MTZ_11->9  5
-    z[11]     MTZ_11->10  5
     MARKER    'MARKER'                 'INTEND'
     u[0]      MTZ_0->1  -1
     u[0]      Uvardiff_0->1  -1

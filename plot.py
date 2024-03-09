@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-import pickle, json
 from gurobipy import Model
 from network import Network
 
