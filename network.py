@@ -19,6 +19,7 @@ class Network:
         Please make sure that you provide num_angels if locs or aid is provided as an explicit list
         """
         self._instance = read_instance(path)
+        self._instance_file = path
         self._rng = default_rng()
         self._num_angels, self._radius = self._set_angel_parameters(num_angels, radius)
         self._add_angels_to_instance(angel_locs, angel_demand)
@@ -169,6 +170,13 @@ class Network:
     # e.g. [[], [], [], [1,3], [2,4]]
     # where the angels are the tail of the list
     def get_communities(self) -> list[list[int]]:
+        """
+        Creates a 2D (n+m by ?) list of indices which serves as an "adjacency" matrix. 
+        Each sublist is a set of vertices which are within the radius of the node.
+        The first axis corresponds to each node, excluding the depot, starting with the vertices and
+        the tail corresponds to the angels.
+        e.g. [[], [], [], [1,3], [2,4]]
+        """
         communities = []
         for i in range(self._instance['community'].shape[0]):
             community = []
