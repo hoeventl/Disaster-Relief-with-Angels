@@ -1,6 +1,6 @@
 import sys
 from network import *
-from experiment import *
+from examples import *
 from model import *
 from plot import *
 
