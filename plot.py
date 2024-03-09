@@ -20,10 +20,7 @@ def draw(network: Network, model: Model) -> None:
     
     _draw(network, active_edges, active_angels)
     
-def draw(network_path: str, sol_path: str) -> None:
-    network = pickle.load(open(network_path, "rb"))
-    sol = json.load(open(sol_path, "rb"))
-
+def draw(network: Network, sol: dict) -> None:
     active_edges = []
     active_angels = []
     for v in sol["Vars"]:
