@@ -26,6 +26,17 @@ def variable_angel_demand(instance: str, folder_destination: str, suffix: str, v
                           activation_cost=20)
         run_experiment(folder_destination, suffix, network, ad)
 
+def variable_activation_cost(instance: str, folder_destination: str, suffix: str, values: list[int]):
+    for w in values:
+        network = Network(instance,\
+                          num_angels=1,\
+                          radius=90,\
+                          angel_locs=[(250,250)],\
+                          aid="max",\
+                          angel_demand=30,\
+                          activation_cost=w)
+        run_experiment(folder_destination, suffix, network, w)
+
 def run_experiment(folder_destination, suffix, network, val):
     model = create_model_from_network(network)
     model.optimize()
@@ -102,13 +113,15 @@ def clear_folder(folder: str):
 
 INSTANCE = "./Instances/TH-n11-k2.vrp"
 OUTPUT_FOLDER = "./output/"
-SUBFOLDER = "angel_demand/"
-suffix = "ad-"
+SUBFOLDER = "activation_cost/"
+suffix = "w-"
 radius_vals = [0, 60, 70, 95, 105, 125]
 angel_demand_vals = [i for i in range(10,51,5)]
+activation_cost_vals = [w for w in range(10,91,10)]
 
-# variable_radius(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, radius_vals)
 clear_folder(OUTPUT_FOLDER+SUBFOLDER)
-variable_angel_demand(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
+# variable_radius(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, radius_vals)
+# variable_angel_demand(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
+variable_activation_cost(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, activation_cost_vals)
 analyze_solutions(OUTPUT_FOLDER+SUBFOLDER)
-# visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, suffix, radius_vals)
+# visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
