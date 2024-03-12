@@ -109,6 +109,13 @@ class Network:
         elif isinstance(cost, list):
             angel_activation_costs = np.asarray(cost)
         return np.concatenate((vertex_activation_costs, angel_activation_costs)).tolist()
+    
+    def set_edge_weights(self, weights: list[list[float]] | np.ndarray) -> None:
+        """
+        Weights is an (n+m+1) by (n+m+1) weight matrix. Assumes angels have alread been added.
+        """
+        self._instance['edge_weight'] = np.array(weights)
+        self.edge_weights = self._instance['edge_weight'].tolist()
 
     def _add_angels_to_nodes(self, locs: list | None) -> None:
         if locs is None:

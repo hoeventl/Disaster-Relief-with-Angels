@@ -1,5 +1,6 @@
 import os, pickle, json, glob
 from re import search
+from random import random
 from network import *
 from model import *
 from plot import *
@@ -37,11 +38,37 @@ def variable_activation_cost(instance: str, folder_destination: str, suffix: str
                           activation_cost=w)
         run_experiment(folder_destination, suffix, network, w)
 
+def variable_connectivity(instance: str, folder_destination: str, suffix: str, values: list[float]):
+    """
+    Creates networks where the connectivity of the graph varies according to the values which
+    determine the probability that an edge is included in the graph. 
+    Example: values = [0.1, 0.3, 0.5, 0.9] -> 10% of edges, 30% of edges, ...
+    """
+    for p in values:
+        network = Network(instance,\
+                          num_angels=1,\
+                          radius=90,\
+                          angel_locs=[(250,250)],\
+                          aid="max",\
+                          angel_demand=30,\
+                          activation_cost=20)
+        weights = network.edge_weights
+        num_nodes = len(weights)
+        for i in range(num_nodes):
+            for j in range(num_nodes):
+                if random() > p:
+                    weights[i][j] = 1e100
+        network.set_edge_weights(weights)
+        run_experiment(folder_destination, suffix, network, p)
+
 def run_experiment(folder_destination, suffix, network, val):
     model = create_model_from_network(network)
     model.optimize()
 
-        # write solution and model to be loaded and used another day
+    # need to check solve status
+
+
+    # write solution and model to be loaded and used another day
     mps_path = os.path.join(folder_destination, f"model_{suffix}{val}.mps")
     model.write(mps_path)
     sol_path = os.path.join(folder_destination, f"sol_{suffix}{val}.json")
@@ -113,15 +140,17 @@ def clear_folder(folder: str):
 
 INSTANCE = "./Instances/TH-n11-k2.vrp"
 OUTPUT_FOLDER = "./output/"
-SUBFOLDER = "activation_cost/"
-suffix = "w-"
+SUBFOLDER = "connectivity/"
+suffix = "p-"
 radius_vals = [0, 60, 70, 95, 105, 125]
 angel_demand_vals = [i for i in range(10,51,5)]
 activation_cost_vals = [w for w in range(10,91,10)]
+connectivity_vals = [1, 0.9, 0.75, 0.5, 0.3]
 
-clear_folder(OUTPUT_FOLDER+SUBFOLDER)
+# clear_folder(OUTPUT_FOLDER+SUBFOLDER)
 # variable_radius(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, radius_vals)
 # variable_angel_demand(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
-variable_activation_cost(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, activation_cost_vals)
-analyze_solutions(OUTPUT_FOLDER+SUBFOLDER)
-# visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
+# variable_activation_cost(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, activation_cost_vals)
+# variable_connectivity(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, connectivity_vals)
+# analyze_solutions(OUTPUT_FOLDER+SUBFOLDER)
+visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, suffix, connectivity_vals)
