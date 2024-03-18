@@ -1,9 +1,12 @@
 import os, pickle, json, glob
+import networkx as nx
 from re import search
 from random import random
 from network import *
 from model import *
 from plot import *
+
+INFINITY = 1e100
 
 def variable_radius(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for r in values:
@@ -57,7 +60,7 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
         for i in range(num_nodes):
             for j in range(num_nodes):
                 if random() > p:
-                    weights[i][j] = 1e100
+                    weights[i][j] = INFINITY
         network.set_edge_weights(weights)
         run_experiment(folder_destination, suffix, network, p)
 
@@ -65,17 +68,22 @@ def run_experiment(folder_destination, suffix, network, val):
     model = create_model_from_network(network)
     model.optimize()
 
-    # need to check solve status
+    if model.Status == GRB.OPTIMAL:
+        # write the solution if optimal
+        sol_path = os.path.join(folder_destination, f"sol_{suffix}{val}.json")
+        model.write(sol_path)
+    else:
+        # write IIS (Irreducible Infeasible Subsystem) if failed to solve for any reason
+        iis_path = os.path.join(folder_destination, f"iis_{suffix}{val}.ilp")
+        model.write(iis_path)
 
-
-    # write solution and model to be loaded and used another day
+    # write model and network object to file for later reload
     mps_path = os.path.join(folder_destination, f"model_{suffix}{val}.mps")
     model.write(mps_path)
-    sol_path = os.path.join(folder_destination, f"sol_{suffix}{val}.json")
-    model.write(sol_path)
     network_path = os.path.join(folder_destination, f"network_{suffix}{val}.pickle")
     with open(network_path, "wb") as network_file:
         pickle.dump(network, network_file)
+    
 
 def analyze_solutions(folder: str):
     sol_path_style = os.path.join(folder, "sol_*.json")
@@ -100,6 +108,7 @@ def analyze_solutions(folder: str):
         # inactive_angels = [a for a in angels if a not in active_angels]
         data["percent_active_angels"] = len(active_angels)/float(network._num_angels)
 
+
         communities = network.get_communities()
         angel_aid = network.angel_aid
         demand_covered_by_angels = sum(len(communities[a]) * angel_aid[a] for a in active_angels)
@@ -121,6 +130,30 @@ def get_active_edges_and_angels(sol: dict):
                 active_angels.append(eval(v['VarName'][1:])[0])
     return active_edges, active_angels
 
+def analyze_centralities(data: dict, sol: dict, network: Network):
+    G = nx.DiGraph()
+    coords = network.get_coordinates()
+    edge_weights = network.edge_weights
+    edges = []
+    num_nodes = len(network.nodes_with_depot)
+    for i in range(num_nodes):
+        for j in range(num_nodes):
+            if edge_weights[i][j] < INFINITY:
+                edges.append((i,j))
+
+    G.add_nodes_from(coords)
+    G.add_edges_from(edges)
+    data['closeness_centrality'] = nx.closeness_centrality(G)
+    
+    # active_edges, active_angels = get_active_edges_and_angels(sol)
+    A = nx.DiGraph()
+    angels = network.nodes[-network._num_angels:]
+    angel_edges = [(u,v) for (u,v) in edges if u in angels and v in angels]
+    A.add_nodes_from(angels)
+    A.add_edges_from(angel_edges)
+    data['angel_closeness_centrality'] = nx.closeness_centrality(A)
+
+
 def visualize_experiments(folder: str, suffix: str, values: list[int]):
     if not os.path.exists(folder):
         raise Exception(f"Invalid folder path: {folder}")
@@ -136,21 +169,3 @@ def clear_folder(folder: str):
     files = glob.glob(f"{folder}*")
     for f in files:
         os.remove(f)
-
-
-INSTANCE = "./Instances/TH-n11-k2.vrp"
-OUTPUT_FOLDER = "./output/"
-SUBFOLDER = "connectivity/"
-suffix = "p-"
-radius_vals = [0, 60, 70, 95, 105, 125]
-angel_demand_vals = [i for i in range(10,51,5)]
-activation_cost_vals = [w for w in range(10,91,10)]
-connectivity_vals = [1, 0.9, 0.75, 0.5, 0.3]
-
-# clear_folder(OUTPUT_FOLDER+SUBFOLDER)
-# variable_radius(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, radius_vals)
-# variable_angel_demand(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
-# variable_activation_cost(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, activation_cost_vals)
-# variable_connectivity(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, connectivity_vals)
-# analyze_solutions(OUTPUT_FOLDER+SUBFOLDER)
-visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, suffix, connectivity_vals)
