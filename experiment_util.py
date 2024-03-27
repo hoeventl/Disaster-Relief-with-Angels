@@ -44,29 +44,30 @@ def variable_activation_cost(instance: str, folder_destination: str, suffix: str
         experiment_name = f"{suffix}{w}"
         run(folder_destination, network, experiment_name)
 
-def variable_connectivity(instance: str, folder_destination: str, suffix: str, values: list[float]):
+def variable_connectivity(instance: str, folder_destination: str, suffix: str, values: list[float], num_trials: int):
     """
     Creates networks where the connectivity of the graph varies according to the values which
     determine the probability that an edge is included in the graph. 
     Example: values = [0.1, 0.3, 0.5, 0.9] -> 10% of edges, 30% of edges, ...
     """
     for p in values:
-        network = Network(instance,\
-                          num_angels=1,\
-                          radius=90,\
-                          angel_locs=[(250,250)],\
-                          aid="max",\
-                          angel_demand=30,\
-                          activation_cost=20)
-        weights = network.edge_weights
-        num_nodes = len(weights)
-        for i in range(num_nodes):
-            for j in range(num_nodes):
-                if random() > p:
-                    weights[i][j] = INFINITY
-        network.set_edge_weights(weights)
-        experiment_name = f"{suffix}{p}"
-        run(folder_destination, network, experiment_name)
+        for t in range(1, num_trials+1):
+            network = Network(instance,\
+                            num_angels=1,\
+                            radius=90,\
+                            angel_locs=[(250,250)],\
+                            aid="max",\
+                            angel_demand=30,\
+                            activation_cost=20)
+            weights = network.edge_weights
+            num_nodes = len(weights)
+            for i in range(num_nodes):
+                for j in range(num_nodes):
+                    if random() > p:
+                        weights[i][j] = INFINITY
+            network.set_edge_weights(weights)
+            experiment_name = f"{suffix}{p}({t})"
+            run(folder_destination, network, experiment_name)
 
 def run(folder_destination, network, experiment_name):
     model = create_model_from_network(network)
