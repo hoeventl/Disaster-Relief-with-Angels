@@ -113,16 +113,38 @@ def analyze_solutions(folder: str):
         data["experiment"] = experiment_name
         # do some analysis here based on the solution and network
         active_edges, active_angels = get_active_edges_and_angels(sol)
-        # angels = network.nodes[-network._num_angels:]
+        angels = network.nodes[-network._num_angels:]
         # inactive_angels = [a for a in angels if a not in active_angels]
         data["percent_active_angels"] = len(active_angels)/float(network._num_angels)
 
 
+        angel_data = {}
         communities = network.get_communities()
         angel_aid = network.angel_aid
+        for a in angels:
+            angel_entry = {}
+            size_of_community = len(communities[a])
+            demand_of_community = sum(network.demand[v] for v in communities[a])
+            total_aid_to_community = size_of_community * angel_aid[a]
+
+            angel_entry["isActive"] = a in active_angels
+            angel_entry["num_vertices_in_community"] = size_of_community
+            angel_entry["total_demand_of_community"] = demand_of_community
+            angel_entry["percent_demand_handled_from_community"] = \
+                        total_aid_to_community / float(demand_of_community) \
+                        if demand_of_community != 0 \
+                        else 0
+            angel_entry["community_closeness_to_depot"] = sum(
+                                    size_of_community / network.edge_weights[0][v] 
+                                    for v in communities[a])
+
+            angel_data[a] = angel_entry
+        data["angel_data"] = angel_data
+
         demand_covered_by_angels = sum(len(communities[a]) * angel_aid[a] for a in active_angels)
         total_demand_of_network = sum(network.demand)
-        data["percent_demand_handled_by_active_angels"] = demand_covered_by_angels/float(total_demand_of_network)
+        data["percent_demand_handled_by_active_angels"] = \
+                    demand_covered_by_angels / float(total_demand_of_network)
 
         # write analysis to file
         with open(os.path.join(folder, f"analysis_{experiment_name}.json"), "w+") as a:
