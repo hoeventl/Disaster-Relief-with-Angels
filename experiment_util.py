@@ -77,10 +77,14 @@ def run(folder_destination, network, experiment_name):
         # write the solution if optimal
         sol_path = os.path.join(folder_destination, f"sol_{experiment_name}.json")
         model.write(sol_path)
-    else:
+    elif model.Status == GRB.INFEASIBLE:
         # write IIS (Irreducible Infeasible Subsystem) if failed to solve for any reason
         iis_path = os.path.join(folder_destination, f"iis_{experiment_name}.ilp")
         model.write(iis_path)
+    else:
+        # failed for some other reason
+        with open(f"./failed_{experiment_name}.txt", "w+") as f:
+            f.write("This model failed to solve for reasons other than infeasiblity.")
 
     # write model and network object to file for later reload
     mps_path = os.path.join(folder_destination, f"model_{experiment_name}.mps")
