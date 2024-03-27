@@ -17,7 +17,8 @@ def variable_radius(instance: str, folder_destination: str, suffix: str, values:
                           aid="max",\
                           angel_demand=20,\
                           activation_cost=20)
-        run_experiment(folder_destination, suffix, r, network)
+        experiment_name = f"{suffix}{r}"
+        run(folder_destination, network, experiment_name)
 
 def variable_angel_demand(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for ad in values:
@@ -28,7 +29,8 @@ def variable_angel_demand(instance: str, folder_destination: str, suffix: str, v
                           aid="max",\
                           angel_demand=ad,\
                           activation_cost=20)
-        run_experiment(folder_destination, suffix, network, ad)
+        experiment_name = f"{suffix}{ad}"
+        run(folder_destination, network, experiment_name)
 
 def variable_activation_cost(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for w in values:
@@ -39,7 +41,8 @@ def variable_activation_cost(instance: str, folder_destination: str, suffix: str
                           aid="max",\
                           angel_demand=30,\
                           activation_cost=w)
-        run_experiment(folder_destination, suffix, network, w)
+        experiment_name = f"{suffix}{w}"
+        run(folder_destination, network, experiment_name)
 
 def variable_connectivity(instance: str, folder_destination: str, suffix: str, values: list[float]):
     """
@@ -62,25 +65,26 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
                 if random() > p:
                     weights[i][j] = INFINITY
         network.set_edge_weights(weights)
-        run_experiment(folder_destination, suffix, network, p)
+        experiment_name = f"{suffix}{p}"
+        run(folder_destination, network, experiment_name)
 
-def run_experiment(folder_destination, suffix, network, val):
+def run(folder_destination, network, experiment_name):
     model = create_model_from_network(network)
     model.optimize()
 
     if model.Status == GRB.OPTIMAL:
         # write the solution if optimal
-        sol_path = os.path.join(folder_destination, f"sol_{suffix}{val}.json")
+        sol_path = os.path.join(folder_destination, f"sol_{experiment_name}.json")
         model.write(sol_path)
     else:
         # write IIS (Irreducible Infeasible Subsystem) if failed to solve for any reason
-        iis_path = os.path.join(folder_destination, f"iis_{suffix}{val}.ilp")
+        iis_path = os.path.join(folder_destination, f"iis_{experiment_name}.ilp")
         model.write(iis_path)
 
     # write model and network object to file for later reload
-    mps_path = os.path.join(folder_destination, f"model_{suffix}{val}.mps")
+    mps_path = os.path.join(folder_destination, f"model_{experiment_name}.mps")
     model.write(mps_path)
-    network_path = os.path.join(folder_destination, f"network_{suffix}{val}.pickle")
+    network_path = os.path.join(folder_destination, f"network_{experiment_name}.pickle")
     with open(network_path, "wb") as network_file:
         pickle.dump(network, network_file)
     
@@ -95,13 +99,13 @@ def analyze_solutions(folder: str):
         raise Exception("Unable to analyze solutions: inequal amount of network object files and solution files.")
 
     for i in range(len(sol_paths)):
-        suffix = search("sol_(.+?).json", sol_paths[i]).group(1)
+        experiment_name = search("sol_(.+?).json", sol_paths[i]).group(1)
         sol = json.load(open(sol_paths[i], "rb"))
         network = pickle.load(open(network_paths[i], "rb"))
 
         data = {}
         data["instance"] = network._instance_file
-        data["experiment"] = suffix
+        data["experiment"] = experiment_name
         # do some analysis here based on the solution and network
         active_edges, active_angels = get_active_edges_and_angels(sol)
         # angels = network.nodes[-network._num_angels:]
@@ -116,7 +120,7 @@ def analyze_solutions(folder: str):
         data["percent_demand_handled_by_active_angels"] = demand_covered_by_angels/float(total_demand_of_network)
 
         # write analysis to file
-        with open(os.path.join(folder, f"analysis_{suffix}.json"), "w+") as a:
+        with open(os.path.join(folder, f"analysis_{experiment_name}.json"), "w+") as a:
             json.dump(data, a)
 
 def get_active_edges_and_angels(sol: dict):
