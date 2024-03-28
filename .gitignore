@@ -8,3 +8,4 @@ Solutions/*
 !Solutions/A-n32-k5.sol
 __pycache__/
 output/*
+!output/miscellaneous/

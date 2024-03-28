@@ -73,8 +73,8 @@ def run(folder_destination, network, experiment_name):
     model = create_model_from_network(network)
     model.optimize()
 
-    if model.Status == GRB.OPTIMAL:
-        # write the solution if optimal
+    if model.Status == GRB.OPTIMAL or model.Status == GRB.INTERRUPTED:
+        # write the solution if optimal or stopped by user
         sol_path = os.path.join(folder_destination, f"sol_{experiment_name}.json")
         model.write(sol_path)
     elif model.Status == GRB.INFEASIBLE:
@@ -83,7 +83,7 @@ def run(folder_destination, network, experiment_name):
         model.write(iis_path)
     else:
         # failed for some other reason
-        with open(f"./failed_{experiment_name}.txt", "w+") as f:
+        with open(os.path.join(folder_destination, f"./failed_{experiment_name}.txt"), "w+") as f:
             f.write("This model failed to solve for reasons other than infeasiblity.")
 
     # write model and network object to file for later reload
@@ -108,13 +108,14 @@ def analyze_solutions(folder: str):
         sol = json.load(open(sol_paths[i], "rb"))
         network = pickle.load(open(network_paths[i], "rb"))
 
+        # do some analysis here based on the solution and network
         data = {}
         data["instance"] = network._instance_file
         data["experiment"] = experiment_name
-        # do some analysis here based on the solution and network
         active_edges, active_angels = get_active_edges_and_angels(sol)
         data["angel_data"] = create_angel_data(network, active_angels)
         data["network_data"] = create_network_data(sol, network)
+        
         # write analysis to file
         with open(os.path.join(folder, f"analysis_{experiment_name}.json"), "w+") as a:
             json.dump(data, a)
@@ -149,6 +150,14 @@ def create_angel_data(network, active_angels):
         angel_entry["community_closeness_to_depot"] = sum(
                                     size_of_community / network.edge_weights[0][v] 
                                     for v in communities[a])
+        angel_entry["average_demand_of_community"] = demand_of_community / size_of_community \
+                                                    if size_of_community != 0 \
+                                                    else 0
+        if len(angels) > 1:
+            angel_entry["community_vertex_uniqueness"] = size_of_community \
+                            - max(
+                                [len(set(communities[a]).intersection(communities[b])) 
+                                for b in angels if a != b])
 
         entries[a] = angel_entry
 
@@ -175,11 +184,11 @@ def create_network_data(sol: dict, network: Network):
     for i in range(num_nodes):
         for j in range(num_nodes):
             if edge_weights[i][j] < INFINITY:
-                edges.append((i,j))
+                edges.append((i,j,{"weight": edge_weights[i][j]}))
 
     G.add_nodes_from(coords)
     G.add_edges_from(edges)
-    data['closeness_centrality'] = nx.closeness_centrality(G)
+    data['closeness_centrality'] = nx.closeness_centrality(G, distance="weight")
 
     return data
     

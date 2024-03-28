@@ -54,7 +54,8 @@ def _draw(network: Network, active_edges: list[tuple], active_angels: list) -> N
             color_map.append('red')
     nx.draw(G, 
             pos=coords,
-            labels={i:i+1 for i in range(G.number_of_nodes())},
+            with_labels=True,
+            font_size=8,
             node_color=color_map, 
             node_size=100)
     

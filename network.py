@@ -14,7 +14,7 @@ class Network:
                  max_num_routes: int = None, 
                  angel_locs: list = None, 
                  angel_demand: int | list = None,
-                 activation_cost = int | list | None) -> None:
+                 activation_cost: int | list | None = None) -> None:
         """
         Please make sure that you provide num_angels if locs or aid is provided as an explicit list
         """
