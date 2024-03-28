@@ -113,42 +113,46 @@ def analyze_solutions(folder: str):
         data["experiment"] = experiment_name
         # do some analysis here based on the solution and network
         active_edges, active_angels = get_active_edges_and_angels(sol)
-        angels = network.nodes[-network._num_angels:]
-        # inactive_angels = [a for a in angels if a not in active_angels]
-        data["percent_active_angels"] = len(active_angels)/float(network._num_angels)
-
-
-        angel_data = {}
-        communities = network.get_communities()
-        angel_aid = network.angel_aid
-        for a in angels:
-            angel_entry = {}
-            size_of_community = len(communities[a])
-            demand_of_community = sum(network.demand[v] for v in communities[a])
-            total_aid_to_community = size_of_community * angel_aid[a]
-
-            angel_entry["isActive"] = a in active_angels
-            angel_entry["num_vertices_in_community"] = size_of_community
-            angel_entry["total_demand_of_community"] = demand_of_community
-            angel_entry["percent_demand_handled_from_community"] = \
-                        total_aid_to_community / float(demand_of_community) \
-                        if demand_of_community != 0 \
-                        else 0
-            angel_entry["community_closeness_to_depot"] = sum(
-                                    size_of_community / network.edge_weights[0][v] 
-                                    for v in communities[a])
-
-            angel_data[a] = angel_entry
-        data["angel_data"] = angel_data
-
-        demand_covered_by_angels = sum(len(communities[a]) * angel_aid[a] for a in active_angels)
-        total_demand_of_network = sum(network.demand)
-        data["percent_demand_handled_by_active_angels"] = \
-                    demand_covered_by_angels / float(total_demand_of_network)
-
+        data["angel_data"] = create_angel_data(network, active_angels)
+        data["network_data"] = create_network_data(sol, network)
         # write analysis to file
         with open(os.path.join(folder, f"analysis_{experiment_name}.json"), "w+") as a:
             json.dump(data, a)
+
+def create_angel_data(network, active_angels):
+    angel_data = {}
+    angels = network.nodes[-network._num_angels:]
+    angel_aid = network.angel_aid
+    communities = network.get_communities()
+    angel_aid = network.angel_aid
+
+    angel_data["percent_active_angels"] = len(active_angels)/float(network._num_angels)
+    demand_covered_by_angels = sum(len(communities[a]) * angel_aid[a] for a in active_angels)
+    total_demand_of_network = sum(network.demand)
+    angel_data["percent_demand_handled_by_active_angels"] = \
+                demand_covered_by_angels / float(total_demand_of_network)
+
+    entries = angel_data['angels'] = {}
+    for a in angels:
+        angel_entry = {}
+        size_of_community = len(communities[a])
+        demand_of_community = sum(network.demand[v] for v in communities[a])
+        total_aid_to_community = size_of_community * angel_aid[a]
+
+        angel_entry["isActive"] = a in active_angels
+        angel_entry["num_vertices_in_community"] = size_of_community
+        angel_entry["total_demand_of_community"] = demand_of_community
+        angel_entry["percent_demand_handled_from_community"] = \
+                        total_aid_to_community / float(demand_of_community) \
+                        if demand_of_community != 0 \
+                        else 0
+        angel_entry["community_closeness_to_depot"] = sum(
+                                    size_of_community / network.edge_weights[0][v] 
+                                    for v in communities[a])
+
+        entries[a] = angel_entry
+
+    return angel_data
 
 def get_active_edges_and_angels(sol: dict):
     active_edges = []
@@ -161,7 +165,8 @@ def get_active_edges_and_angels(sol: dict):
                 active_angels.append(eval(v['VarName'][1:])[0])
     return active_edges, active_angels
 
-def analyze_centralities(data: dict, sol: dict, network: Network):
+def create_network_data(sol: dict, network: Network):
+    data = {}
     G = nx.DiGraph()
     coords = network.get_coordinates()
     edge_weights = network.edge_weights
@@ -175,23 +180,17 @@ def analyze_centralities(data: dict, sol: dict, network: Network):
     G.add_nodes_from(coords)
     G.add_edges_from(edges)
     data['closeness_centrality'] = nx.closeness_centrality(G)
+
+    return data
     
-    # active_edges, active_angels = get_active_edges_and_angels(sol)
-    A = nx.DiGraph()
-    angels = network.nodes[-network._num_angels:]
-    angel_edges = [(u,v) for (u,v) in edges if u in angels and v in angels]
-    A.add_nodes_from(angels)
-    A.add_edges_from(angel_edges)
-    data['angel_closeness_centrality'] = nx.closeness_centrality(A)
 
-
-def visualize_experiments(folder: str, suffix: str, values: list[int]):
+def visualize_experiments(folder: str, experiment_names: str):
     if not os.path.exists(folder):
         raise Exception(f"Invalid folder path: {folder}")
     
-    for x in values:
-        network_path = os.path.join(folder, f"network_{suffix}{x}.pickle")
-        sol_path = os.path.join(folder, f"sol_{suffix}{x}.json")
+    for x in experiment_names:
+        network_path = os.path.join(folder, f"network_{x}.pickle")
+        sol_path = os.path.join(folder, f"sol_{x}.json")
         network = pickle.load(open(network_path, "rb"))
         sol = json.load(open(sol_path, "rb"))
         draw(network, sol)

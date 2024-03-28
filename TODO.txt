@@ -2,10 +2,6 @@
 - network input checking
 - plot give title/axes
 - network smart update when field is manually changed (use setters)
-- experiment allow for multiple runs of same (when randomization is included like connectivity)
-    - this requires analysis during runtime, which is not currently supported. Currently, the 
-    analysis occurs post experiment. This design choice was so that a dedicated server can run the 
-    optimization problems as fast as possible and to save progress in case of failure.
 
 CODE EXAMPLES (likely jupyter notebooks)
 - show how to use a network and model object to interface with networkx
