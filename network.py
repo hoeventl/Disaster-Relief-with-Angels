@@ -52,7 +52,6 @@ class Network:
             if isinstance(v, np.ndarray):
                 v = v.tolist()
             instance_obj[k] = v
-        obj["_instance"] = instance_obj
         obj["_instance_file"] = self._instance_file
         # obj["_rng"] = self._rng
         obj["_num_angels"] = self._num_angels
@@ -69,6 +68,7 @@ class Network:
         obj["vehicle_capacity"] = self.vehicle_capacity
         obj["angel_aid"] = self.angel_aid
         obj["activation_cost"] = self.activation_cost
+        obj["_instance"] = instance_obj
         return obj
         
 
@@ -139,7 +139,7 @@ class Network:
     
     def set_edge_weights(self, weights: list[list[float]] | np.ndarray) -> None:
         """
-        Weights is an (n+m+1) by (n+m+1) weight matrix. Assumes angels have alread been added.
+        Weights is an (n+m+1) by (n+m+1) weight matrix. Assumes angels have already been added.
         """
         self._instance['edge_weight'] = np.array(weights)
         self.edge_weights = self._instance['edge_weight'].tolist()
@@ -189,15 +189,19 @@ class Network:
              axis=1) # bottom part of array
         self._instance['community'] = np.concatenate((vertex_to_vertex_community, angel_community))
 
-    # Adds a random number angels with random demand to the instance
     def _add_angels_to_instance(self, locs: list | None, angel_demand: int | list | None) -> None:
+        """
+        Adds a random number angels with random demand to the instance
+        """
         self._add_angels_to_nodes(locs)
         self._add_angel_demand(angel_demand)
         self._update_edge_weights()
         self._create_angel_communities()
 
-    # Gets a set of indices which are the ground set of all nodes in the network including angels
     def get_nodes_with_depot(self) -> list:
+        """
+        Gets a set of indices which are the ground set of all nodes in the network including angels
+        """
         return list(range(self._instance['node_coord'].shape[0]))
 
     # gets a complete 2d array of "adjacency-like" communities
