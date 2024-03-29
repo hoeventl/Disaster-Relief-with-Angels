@@ -69,8 +69,16 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
             experiment_name = f"{suffix}{p}({t})"
             run(folder_destination, network, experiment_name)
 
-def run(folder_destination, network, experiment_name):
+def run(folder_destination: str, network: Network, experiment_name: str, time_limit: float = None):
+    """
+    folder_destination  : where to place the model, solution, and network files
+    network             : a Network object
+    experiment_name     : what to call the experiment (should be unique from others in same folder)
+    time_limit          : in minutes, the maximum amount of time allowed for solving (default is infinite)
+    """
     model = create_model_from_network(network)
+    if time_limit:
+        model.setParam("TimeLimit", time_limit)
     model.optimize()
 
     if model.Status == GRB.OPTIMAL or model.Status == GRB.INTERRUPTED:
