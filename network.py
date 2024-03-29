@@ -45,6 +45,33 @@ class Network:
         # Arbitrarily determined
         self.activation_cost = self.set_angel_activation_cost(activation_cost) # probably does not need to be detemined here but in model
 
+    def to_dict(self) -> dict:
+        obj = {}
+        instance_obj = {}
+        for (k,v) in self._instance.items():
+            if isinstance(v, np.ndarray):
+                v = v.tolist()
+            instance_obj[k] = v
+        obj["_instance"] = instance_obj
+        obj["_instance_file"] = self._instance_file
+        # obj["_rng"] = self._rng
+        obj["_num_angels"] = self._num_angels
+        obj["radius"] = self._radius
+        obj["max_num_routes"] = self.max_num_routes
+        obj["nodes_with_depot"] = self.nodes_with_depot
+        obj["nodes"] = self.nodes
+        obj["vertices"] = self.vertices
+        obj["angels"] = self.angels
+        obj["communities"] = self.communities
+        obj["edge_weights"] = self.edge_weights
+        obj["demand"] = self.demand
+        obj["angel_demand"] = self.angel_demand
+        obj["vehicle_capacity"] = self.vehicle_capacity
+        obj["angel_aid"] = self.angel_aid
+        obj["activation_cost"] = self.activation_cost
+        return obj
+        
+
     # def _check_angel_sizes(self, aid, locs) -> bool | int:
     #     if aid is None and isinstance(locs,list):
     #         return len(locs)
@@ -188,7 +215,7 @@ class Network:
         for i in range(self._instance['community'].shape[0]):
             community = []
             for j in range(self._instance['community'].shape[1]):
-                if self._instance['community'][i][j] and i != 0 and j != 0: # do not include the depot
+                if self._instance['community'][i][j] and j != 0: # do not include the depot
                     community.append(j)
             communities.append(community)
         return communities
