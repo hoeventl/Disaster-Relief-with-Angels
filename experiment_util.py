@@ -114,8 +114,8 @@ def analyze_solutions(folder: str):
         data["experiment"] = experiment_name
         active_edges, active_angels = get_active_edges_and_angels(sol)
         data["angel_data"] = create_angel_data(network, active_angels)
-        data["network_data"] = create_network_data(sol, network)
-        
+        data["graph_data"] = create_graph_data(sol, network)
+        data["network_data"] = network.to_dict()
         # write analysis to file
         with open(os.path.join(folder, f"analysis_{experiment_name}.json"), "w+") as a:
             json.dump(data, a)
@@ -148,7 +148,7 @@ def create_angel_data(network, active_angels):
                         if demand_of_community != 0 \
                         else 0
         angel_entry["community_closeness_to_depot"] = sum(
-                                    size_of_community / network.edge_weights[0][v] 
+                                    size_of_community / (network.edge_weights[0][v])
                                     for v in communities[a])
         angel_entry["average_demand_of_community"] = demand_of_community / size_of_community \
                                                     if size_of_community != 0 \
@@ -174,7 +174,7 @@ def get_active_edges_and_angels(sol: dict):
                 active_angels.append(eval(v['VarName'][1:])[0])
     return active_edges, active_angels
 
-def create_network_data(sol: dict, network: Network):
+def create_graph_data(sol: dict, network: Network):
     data = {}
     G = nx.DiGraph()
     coords = network.get_coordinates()
