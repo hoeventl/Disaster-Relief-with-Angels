@@ -188,7 +188,7 @@ class Network:
         for i in range(self._instance['community'].shape[0]):
             community = []
             for j in range(self._instance['community'].shape[1]):
-                if self._instance['community'][i][j]:
+                if self._instance['community'][i][j] and i != 0 and j != 0: # do not include the depot
                     community.append(j)
             communities.append(community)
         return communities
