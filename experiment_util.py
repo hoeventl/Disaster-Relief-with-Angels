@@ -10,37 +10,37 @@ INFINITY = 1e100
 
 def variable_radius(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for r in values:
-        network = Network(instance,\
-                          num_angels=1,\
-                          radius=r,\
-                          angel_locs=[(250,250)],\
-                          aid="max",\
-                          angel_demand=20,\
-                          activation_cost=20)
+        network = Network(instance,
+                            num_angels=3,
+                            radius=r,
+                            aid=16,
+                            angel_locs=[(45,55), (70,70), (10,10)],
+                            angel_demand=40,
+                            activation_cost=25)
         experiment_name = f"{suffix}{r}"
         run(folder_destination, network, experiment_name)
 
 def variable_angel_demand(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for ad in values:
-        network = Network(instance,\
-                          num_angels=1,\
-                          radius=90,\
-                          angel_locs=[(250,250)],\
-                          aid="max",\
-                          angel_demand=ad,\
-                          activation_cost=20)
+        network = Network(instance,
+                            num_angels=3,
+                            radius=25,
+                            aid=16,
+                            angel_locs=[(45,55), (70,70), (10,10)],
+                            angel_demand=ad,
+                            activation_cost=25)
         experiment_name = f"{suffix}{ad}"
         run(folder_destination, network, experiment_name)
 
 def variable_activation_cost(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for w in values:
-        network = Network(instance,\
-                          num_angels=1,\
-                          radius=90,\
-                          angel_locs=[(250,250)],\
-                          aid="max",\
-                          angel_demand=30,\
-                          activation_cost=w)
+        network = Network(instance,
+                            num_angels=3,
+                            radius=25,
+                            aid=16,
+                            angel_locs=[(45,55), (70,70), (10,10)],
+                            angel_demand=40,
+                            activation_cost=w)
         experiment_name = f"{suffix}{w}"
         run(folder_destination, network, experiment_name)
 
@@ -52,13 +52,13 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
     """
     for p in values:
         for t in range(1, num_trials+1):
-            network = Network(instance,\
-                            num_angels=1,\
-                            radius=90,\
-                            angel_locs=[(250,250)],\
-                            aid="max",\
-                            angel_demand=30,\
-                            activation_cost=20)
+            network = Network(instance,
+                            num_angels=3,
+                            radius=25,
+                            aid=16,
+                            angel_locs=[(45,55), (70,70), (10,10)],
+                            angel_demand=40,
+                            activation_cost=25)
             weights = network.edge_weights
             num_nodes = len(weights)
             for i in range(num_nodes):
@@ -69,19 +69,19 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
             experiment_name = f"{suffix}{p}({t})"
             run(folder_destination, network, experiment_name)
 
-def run(folder_destination: str, network: Network, experiment_name: str, time_limit: float = None):
+def run(folder_destination: str, network: Network, experiment_name: str, time_limit: float = 3*60*60):
     """
     folder_destination  : where to place the model, solution, and network files
     network             : a Network object
     experiment_name     : what to call the experiment (should be unique from others in same folder)
-    time_limit          : in minutes, the maximum amount of time allowed for solving (default is infinite)
+    time_limit          : in seconds, the maximum amount of time allowed for solving (default is 3 hours)
     """
     model = create_model_from_network(network)
     if time_limit:
         model.setParam("TimeLimit", time_limit)
     model.optimize()
 
-    if model.Status == GRB.OPTIMAL or model.Status == GRB.INTERRUPTED:
+    if model.Status in [GRB.OPTIMAL, GRB.INTERRUPTED, GRB.TIME_LIMIT]:
         # write the solution if optimal or stopped by user
         sol_path = os.path.join(folder_destination, f"sol_{experiment_name}.json")
         model.write(sol_path)

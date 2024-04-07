@@ -1,13 +1,13 @@
 from experiment_util import *
 
-INSTANCE = "./Instances/TH-n11-k2.vrp"
+INSTANCE = "./Instances/A-n33-k6.vrp"
 OUTPUT_FOLDER = "./output/"
-SUBFOLDER = "miscellaneous/"
+SUBFOLDER = "activation_cost/"
 suffix = "r-"
-radius_vals = [0, 60, 70, 95, 105, 125]
-angel_demand_vals = [i for i in range(10,51,5)]
-activation_cost_vals = [w for w in range(10,91,10)]
-connectivity_vals = [1, 0.9, 0.75, 0.5, 0.3]
+radius_vals = [10, 20, 25, 30, 35, 40]
+angel_demand_vals = [i for i in range(30,61,5)]
+activation_cost_vals = [w for w in range(10,51,10)]
+connectivity_vals = [1, 0.9, 0.75, 0.6, 0.4]
 
 # run(OUTPUT_FOLDER+SUBFOLDER, 
 #     Network("./Instances/A-n33-k6.vrp",
@@ -37,10 +37,10 @@ connectivity_vals = [1, 0.9, 0.75, 0.5, 0.3]
 #     "u3")
 
 # clear_folder(OUTPUT_FOLDER+SUBFOLDER)
-# variable_radius(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, radius_vals)
-# variable_angel_demand(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, angel_demand_vals)
-# variable_activation_cost(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, activation_cost_vals)
-# variable_connectivity(INSTANCE, OUTPUT_FOLDER+SUBFOLDER, suffix, connectivity_vals, 10)
+variable_radius(INSTANCE, OUTPUT_FOLDER+"radius/", suffix, radius_vals)
+variable_angel_demand(INSTANCE, OUTPUT_FOLDER+"angel_demand/", suffix, angel_demand_vals)
+variable_activation_cost(INSTANCE, OUTPUT_FOLDER+"activation_cost/", suffix, activation_cost_vals)
+variable_connectivity(INSTANCE, OUTPUT_FOLDER+"connectivity/", suffix, connectivity_vals, 30)
 # analyze_solutions(OUTPUT_FOLDER+SUBFOLDER)
 
-visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, ["u1"])
+# visualize_experiments(OUTPUT_FOLDER+SUBFOLDER, [f"w-{val}" for val in activation_cost_vals])
