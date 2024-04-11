@@ -155,8 +155,8 @@ def create_angel_data(network, active_angels):
                         total_aid_to_community / float(demand_of_community) \
                         if demand_of_community != 0 \
                         else 0
-        angel_entry["community_closeness_to_depot"] = sum(
-                                    size_of_community / (network.edge_weights[0][v])
+        angel_entry["community_closeness_to_depot"] = float(size_of_community) / sum(
+                                    (network.edge_weights[0][v])
                                     for v in communities[a])
         angel_entry["average_demand_of_community"] = demand_of_community / size_of_community \
                                                     if size_of_community != 0 \

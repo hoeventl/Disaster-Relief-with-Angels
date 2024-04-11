@@ -118,7 +118,7 @@ class Network:
         elif aid > 0:
              angel_aid = np.concatenate((vertex_aid, np.full(self._num_angels, aid))).tolist()
         else:
-            angel_aid = []
+            angel_aid = vertex_aid.tolist()
         return angel_aid
     
     def set_angel_activation_cost(self, cost: int | list | None) -> list:
