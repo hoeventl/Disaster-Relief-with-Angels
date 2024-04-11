@@ -11,38 +11,38 @@ INFINITY = 1e100
 def variable_radius(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for r in values:
         network = Network(instance,
-                            num_angels=3,
+                            num_angels=1,
                             radius=r,
-                            aid=16,
-                            angel_locs=[(45,55), (70,70), (10,10)],
-                            angel_demand=40,
-                            activation_cost=25)
+                            aid="max",
+                            angel_locs=[(250,250)],
+                            angel_demand=20,
+                            activation_cost=20)
         experiment_name = f"{suffix}{r}"
-        run(folder_destination, network, experiment_name)
+        run(folder_destination, network, experiment_name, None)
 
 def variable_angel_demand(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for ad in values:
         network = Network(instance,
-                            num_angels=3,
-                            radius=25,
-                            aid=16,
-                            angel_locs=[(45,55), (70,70), (10,10)],
+                            num_angels=1,
+                            radius=90,
+                            aid="max",
+                            angel_locs=[(250,250)],
                             angel_demand=ad,
-                            activation_cost=25)
+                            activation_cost=20)
         experiment_name = f"{suffix}{ad}"
-        run(folder_destination, network, experiment_name)
+        run(folder_destination, network, experiment_name, None)
 
 def variable_activation_cost(instance: str, folder_destination: str, suffix: str, values: list[int]):
     for w in values:
         network = Network(instance,
-                            num_angels=3,
-                            radius=25,
-                            aid=16,
-                            angel_locs=[(45,55), (70,70), (10,10)],
-                            angel_demand=40,
+                            num_angels=1,
+                            radius=90,
+                            aid="max",
+                            angel_locs=[(250,250)],
+                            angel_demand=20,
                             activation_cost=w)
         experiment_name = f"{suffix}{w}"
-        run(folder_destination, network, experiment_name)
+        run(folder_destination, network, experiment_name, None)
 
 def variable_connectivity(instance: str, folder_destination: str, suffix: str, values: list[float], num_trials: int):
     """
@@ -67,7 +67,7 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
                         weights[i][j] = INFINITY
             network.set_edge_weights(weights)
             experiment_name = f"{suffix}{p}({t})"
-            run(folder_destination, network, experiment_name)
+            run(folder_destination, network, experiment_name, None)
 
 def run(folder_destination: str, network: Network, experiment_name: str, time_limit: float = 3*60*60):
     """
@@ -156,8 +156,10 @@ def create_angel_data(network, active_angels):
                         if demand_of_community != 0 \
                         else 0
         angel_entry["community_closeness_to_depot"] = float(size_of_community) / sum(
-                                    (network.edge_weights[0][v])
-                                    for v in communities[a])
+                                                    (network.edge_weights[0][v])
+                                                    for v in communities[a]) \
+                                                    if size_of_community > 0 \
+                                                    else -1
         angel_entry["average_demand_of_community"] = demand_of_community / size_of_community \
                                                     if size_of_community != 0 \
                                                     else 0
