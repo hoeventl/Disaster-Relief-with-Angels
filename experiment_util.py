@@ -151,6 +151,9 @@ def create_angel_data(network, active_angels):
         angel_entry["isActive"] = a in active_angels
         angel_entry["num_vertices_in_community"] = size_of_community
         angel_entry["total_demand_of_community"] = demand_of_community
+        angel_entry["average_demand_of_community"] = demand_of_community / size_of_community \
+                                                    if size_of_community != 0 \
+                                                    else 0
         angel_entry["percent_demand_handled_from_community"] = \
                         total_aid_to_community / float(demand_of_community) \
                         if demand_of_community != 0 \
@@ -160,9 +163,6 @@ def create_angel_data(network, active_angels):
                                                     for v in communities[a]) \
                                                     if size_of_community > 0 \
                                                     else -1
-        angel_entry["average_demand_of_community"] = demand_of_community / size_of_community \
-                                                    if size_of_community != 0 \
-                                                    else 0
         if len(angels) > 1:
             angel_entry["community_vertex_uniqueness"] = size_of_community \
                             - max(
