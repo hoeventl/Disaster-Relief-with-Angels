@@ -58,7 +58,7 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
                             aid=16,
                             angel_locs=[(45,55), (70,70), (10,10)],
                             angel_demand=40,
-                            activation_cost=25)
+                            activation_cost=20)
             weights = network.edge_weights
             num_nodes = len(weights)
             for i in range(num_nodes):
