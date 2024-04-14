@@ -19,4 +19,4 @@ for v in model.getVars():
         print(f"{v.VarName} = {v.X}")
 
 # generate a graph showing solution
-draw(network, model)
+draw_with_model(network, model)

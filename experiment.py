@@ -5,6 +5,7 @@ OUTPUT_FOLDER = "./output-simple/"
 SUBFOLDER = "angel_demand/"
 suffix = "r-"
 radius_vals = [60, 75, 90, 105, 120]
+radius2 = [10,20,25,30,35,40]
 angel_demand_vals = [i for i in range(25,36,1)]
 activation_cost_vals = [w for w in range(70,91,5)]
 connectivity_vals = [0.9, 0.75, 0.5]
@@ -82,10 +83,10 @@ connectivity_vals2 = [0.6, 0.45]
 #clear_folder(OUTPUT_FOLDER+"activation_cost/")
 #clear_folder(OUTPUT_FOLDER+"angel_demand/")
 #clear_folder(OUTPUT_FOLDER+"connectivity/")
-variable_radius(INSTANCE, OUTPUT_FOLDER+"radius/", "r-", radius_vals)
-variable_angel_demand(INSTANCE, OUTPUT_FOLDER+"angel_demand/", "ad-", angel_demand_vals)
-variable_activation_cost(INSTANCE, OUTPUT_FOLDER+"activation_cost/", "w-", activation_cost_vals)
-variable_connectivity(INSTANCE, OUTPUT_FOLDER+"connectivity/", "c-", connectivity_vals, 5)
-# analyze_solutions(OUTPUT_FOLDER+"connectivity/")
+# variable_radius(INSTANCE, OUTPUT_FOLDER+"radius/", "r-", radius_vals)
+# variable_angel_demand(INSTANCE, OUTPUT_FOLDER+"angel_demand/", "ad-", angel_demand_vals)
+# variable_activation_cost(INSTANCE, OUTPUT_FOLDER+"activation_cost/", "w-", activation_cost_vals)
+# variable_connectivity(INSTANCE, OUTPUT_FOLDER+"connectivity/", "c-", connectivity_vals, 5)
+analyze_solutions("output-simple/"+"connectivity/")
 
-# visualize_experiments("output/"+"angel_demand/", ["r-60"])
+visualize_experiments("output-simple/"+"activation_cost/", [f"w-{val}" for val in [90]])

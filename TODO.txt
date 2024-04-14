@@ -1,6 +1,8 @@
 - network input checking
 - plot give title/axes
 - network smart update when field is manually changed (use setters)
+- analysis
+    - include which other community caused the uniqueness value i.e. argmax()
 
 CODE EXAMPLES (likely jupyter notebooks)
 - show how to use a network and model object to interface with networkx

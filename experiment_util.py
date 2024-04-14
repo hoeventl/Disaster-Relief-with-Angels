@@ -53,11 +53,11 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
     for p in values:
         for t in range(1, num_trials+1):
             network = Network(instance,
-                            num_angels=3,
-                            radius=25,
-                            aid=16,
-                            angel_locs=[(45,55), (70,70), (10,10)],
-                            angel_demand=40,
+                            num_angels=1,
+                            radius=90,
+                            aid="max",
+                            angel_locs=[(250, 250)],
+                            angel_demand=20,
                             activation_cost=20)
             weights = network.edge_weights
             num_nodes = len(weights)
@@ -212,7 +212,7 @@ def visualize_experiments(folder: str, experiment_names: str):
         sol_path = os.path.join(folder, f"sol_{x}.json")
         network = pickle.load(open(network_path, "rb"))
         sol = json.load(open(sol_path, "rb"))
-        draw(network, sol)
+        draw_with_model(network, sol)
 
 def clear_folder(folder: str):
     files = glob.glob(f"{folder}*")

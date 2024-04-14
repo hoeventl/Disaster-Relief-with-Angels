@@ -3,7 +3,7 @@ import networkx as nx
 from gurobipy import Model
 from network import Network
 
-def draw(network: Network, model: Model) -> None:
+def draw_with_model(network: Network, model: Model) -> None:
     """
     Draws the solution.
     """
