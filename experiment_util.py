@@ -67,7 +67,7 @@ def variable_connectivity(instance: str, folder_destination: str, suffix: str, v
                         weights[i][j] = INFINITY
             network.set_edge_weights(weights)
             experiment_name = f"{suffix}{p}({t})"
-            run(folder_destination, network, experiment_name, None)
+            run(folder_destination, network, experiment_name)
 
 def run(folder_destination: str, network: Network, experiment_name: str, time_limit: float = 3*60*60):
     """

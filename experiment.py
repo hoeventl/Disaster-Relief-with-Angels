@@ -1,14 +1,14 @@
 from experiment_util import *
 
-INSTANCE = "./Instances/A-n33-k6.vrp"
-OUTPUT_FOLDER = "./output/"
+INSTANCE = "./Instances/TH-n11-k2.vrp"
+OUTPUT_FOLDER = "./output-simple/"
 SUBFOLDER = "angel_demand/"
 suffix = "r-"
 radius_vals = [60, 75, 90, 105, 120]
 radius2 = [10,20,25,30,35,40]
 angel_demand_vals = [i for i in range(25,36,1)]
 activation_cost_vals = [w for w in range(70,91,5)]
-connectivity_vals = [0.9, 0.75]
+connectivity_vals = [0.9, 0.75, 0.5]
 connectivity_vals2 = [0.6, 0.4]
 
 # run(OUTPUT_FOLDER+SUBFOLDER, 
@@ -87,7 +87,7 @@ maxtime = 5*60*60
 # variable_radius(INSTANCE, OUTPUT_FOLDER+"radius/", "r-", radius_vals)
 # variable_angel_demand(INSTANCE, OUTPUT_FOLDER+"angel_demand/", "ad-", angel_demand_vals)
 # variable_activation_cost(INSTANCE, OUTPUT_FOLDER+"activation_cost/", "w-", activation_cost_vals)
-# variable_connectivity(INSTANCE, OUTPUT_FOLDER+"connectivity/", "c-", connectivity_vals, 5)
-analyze_solutions("output-simple/"+"connectivity/")
+variable_connectivity(INSTANCE, OUTPUT_FOLDER+"connectivity/", "p-", connectivity_vals, 4)
+#analyze_solutions("output-simple/"+"connectivity/")
 
-visualize_experiments("output-simple/"+"activation_cost/", [f"w-{val}" for val in [90]])
+#visualize_experiments("output-simple/"+"activation_cost/", [f"w-{val}" for val in [90]])
