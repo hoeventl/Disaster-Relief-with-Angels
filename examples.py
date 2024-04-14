@@ -54,3 +54,9 @@ def regular_vrp() -> Network:
     """
     n = Network("Instances/A-n32-k5.vrp", num_angels=0)
     return n
+
+def tiny() -> Network:
+    """
+    Creates a very small and simplistic network with one angel.
+    """
+    pass

@@ -7,5 +7,5 @@ Solutions/*
 !Solutions/X-n101-k25.sol
 !Solutions/A-n32-k5.sol
 __pycache__/
-output/*
-!output/miscellaneous/
+IP.txt
+notes.txt
